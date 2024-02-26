@@ -4,6 +4,7 @@ import { type BuildOptions } from './types';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import Dotenv from 'dotenv-webpack';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 export function generatePlugins (
   options: BuildOptions
@@ -20,8 +21,17 @@ export function generatePlugins (
     new webpack.DefinePlugin({ IS_DEV: JSON.stringify(options.isDev), }),
     new Dotenv({
       systemvars: true,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: options.paths._redirects,
+          to: options.paths.output,
+        },
+      ],
     })
   ];
+
   if (options.isDev) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
     plugins.push(

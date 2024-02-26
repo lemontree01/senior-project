@@ -10,6 +10,7 @@ export default (env: BuildEnv): Configuration => {
     output: path.resolve(__dirname, '..', 'build'),
     html: path.resolve('public', 'index.html'),
     src: path.resolve('src'),
+    _redirects: path.resolve('public', '_redirects')
   };
 
   const mode = env.mode ?? 'development';

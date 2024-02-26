@@ -6,6 +6,7 @@ export interface BuildPaths {
   html: string;
   src: string;
   context: string;
+  _redirects: string;
 }
 
 export interface BuildOptions {
