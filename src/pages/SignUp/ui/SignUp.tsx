@@ -1,8 +1,8 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
-import { TextField } from "~/shared/ui/TextField";
-import { Box, Typography, Button } from "@mui/material";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import { Box, Typography, Button } from '@mui/material';
+import { TextField } from '~/shared/ui/TextField';
 
 export function SignUp() {
   return (
@@ -11,8 +11,8 @@ export function SignUp() {
         bgcolor="primary.contrastText container"
         className="container"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 20,
         }}
       >
@@ -20,11 +20,11 @@ export function SignUp() {
           Welcome, let's create an account
         </Typography>
         <Typography
-            style={{
-              marginTop: "20px",
-            }}
-            variant="h6"
-          >
+          style={{
+            marginTop: '20px',
+          }}
+          variant="h6"
+        >
           Register for an account to begin using our Web-Based Criminal Sketch
           Generation and Comparison Platform. After creating your account,
           remember to verify it via email to complete the setup process.
@@ -32,18 +32,18 @@ export function SignUp() {
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            alignSelf: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            alignSelf: 'center',
             gap: 20,
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
               gap: 20,
             }}
           >
@@ -73,11 +73,11 @@ export function SignUp() {
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
+            display: 'flex',
+            flexDirection: 'row',
             gap: 10,
-            justifyContent: "flex-end",
-            alignSelf: "flex-end",
+            justifyContent: 'flex-end',
+            alignSelf: 'flex-end',
           }}
         >
           <Button variant="outlined">Continue</Button>

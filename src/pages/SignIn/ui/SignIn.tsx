@@ -1,6 +1,8 @@
-import { TextField } from "~/shared/ui/TextField";
-import { Text } from "~/shared/ui/Text/Text";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import {
+  Box, Typography, Button, Divider,
+} from '@mui/material';
+import { TextField } from '~/shared/ui/TextField';
+import { Text } from '~/shared/ui/Text/Text';
 
 export function SignIn() {
   return (
@@ -12,17 +14,17 @@ export function SignIn() {
         bgcolor="primary.contrastText container"
         className="container"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 20,
         }}
       >
         <Typography variant="h5">Welcome to the login page</Typography>
         <Typography
-            style={{
-              marginTop: "20px",
-            }}
-            variant="h6"
+          style={{
+            marginTop: '20px',
+          }}
+          variant="h6"
         >
           If you're new here, start by creating an account to access our
           Web-Based Criminal Sketch Generation and Comparison Platform.
@@ -30,10 +32,10 @@ export function SignIn() {
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            alignSelf: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            alignSelf: 'center',
             gap: 20,
           }}
         >
@@ -52,11 +54,11 @@ export function SignIn() {
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
+            display: 'flex',
+            flexDirection: 'row',
             gap: 10,
-            justifyContent: "flex-end",
-            alignSelf: "flex-start",
+            justifyContent: 'flex-end',
+            alignSelf: 'flex-start',
           }}
         >
           <Button variant="outlined">Continue</Button>

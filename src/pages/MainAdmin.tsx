@@ -1,9 +1,9 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import Link from "@mui/material/Link";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 
-export const MainAdmin = () => {
+export function MainAdmin() {
   const navigate = useNavigate();
   return (
     <Box
@@ -14,8 +14,8 @@ export const MainAdmin = () => {
         bgcolor="primary.contrastText container"
         className="container"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 20,
         }}
       >
@@ -23,17 +23,17 @@ export const MainAdmin = () => {
         <Typography variant="h6">Choose where to navigate:</Typography>
         <Link
           className="cursor-pointer"
-          onClick={() => navigate("/admin-criminal")}
+          onClick={() => navigate('/admin-criminal')}
         >
           Insert Criminal
         </Link>
         <Link
           className="cursor-pointer"
-          onClick={() => navigate("/admin-policeman")}
+          onClick={() => navigate('/admin-policeman')}
         >
           Insert Policeman
         </Link>
       </Box>
     </Box>
   );
-};
+}

@@ -169,6 +169,7 @@ export const Home: React.FC<{
                   ? "white !important"
                   : "rgb(23, 23, 23) !important",
               opacity: "50%",
+              fontSize: 18
             }}
           >
             Voice input
@@ -217,6 +218,7 @@ export const Home: React.FC<{
                   ? "white !important"
                   : "rgb(23, 23, 23) !important",
               opacity: "50%",
+              fontSize: 18
             }}
           >
             Text input

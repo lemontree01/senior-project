@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
+/* eslint-disable no-prototype-builtins */
 type classType = string | number | boolean | null | undefined | Record<string, any>;
 
 export function classNames (...args: classType[]): string {

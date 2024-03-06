@@ -1,8 +1,10 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
-import { Box, TextField, Typography, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import {
+  Box, TextField, Typography, Button,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export function TextPrompt() {
   const navigate = useNavigate();
@@ -15,8 +17,8 @@ export function TextPrompt() {
         bgcolor="primary.contrastText container"
         className="container"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 20,
         }}
       >
@@ -24,15 +26,15 @@ export function TextPrompt() {
           Type a textual description of a criminal
         </Typography>
         <Typography
-            style={{
-              marginTop: "20px",
-            }}
-            variant="h6"
+          style={{
+            marginTop: '20px',
+          }}
+          variant="h6"
         >
           Attempt to describe a convict in details
         </Typography>
         <TextField
-         inputProps={{style: {fontSize: 14}}}
+          inputProps={{ style: { fontSize: 14 } }}
           placeholder="Enter your text here"
           multiline
           rows={10}
@@ -41,13 +43,13 @@ export function TextPrompt() {
         />
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
+            display: 'flex',
+            flexDirection: 'row',
             gap: 10,
-            alignSelf: "center",
+            alignSelf: 'center',
           }}
         >
-          <Button variant="outlined" onClick={() => navigate("/text-result")}>
+          <Button variant="outlined" onClick={() => navigate('/text-result')}>
             Save
           </Button>
           <Button variant="contained">Re-enter</Button>

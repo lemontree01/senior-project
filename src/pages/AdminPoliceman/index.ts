@@ -1,1 +1,1 @@
-export { AdminPoliceman } from './ui/AdminPoliceman'
+export { AdminPoliceman } from './ui/AdminPoliceman';

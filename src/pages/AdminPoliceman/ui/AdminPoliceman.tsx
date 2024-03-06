@@ -1,10 +1,7 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
-import { TextField } from "~/shared/ui/TextField";
-import { useNavigate } from "react-router-dom";
-
-import RectangleImageUpload from "~/widgets/RectangleImageUpload/RectangleImageUpload";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -12,7 +9,10 @@ import {
   FormGroup,
   Switch,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
+import { TextField } from '~/shared/ui/TextField';
+
+import RectangleImageUpload from '~/widgets/RectangleImageUpload/RectangleImageUpload';
 
 export function AdminPoliceman() {
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ export function AdminPoliceman() {
         bgcolor="primary.contrastText container"
         className="container"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 20,
         }}
       >
@@ -36,9 +36,9 @@ export function AdminPoliceman() {
         <Box className="flex flex-row">
           <Box
             style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
               gap: 20,
               flex: 2,
             }}
@@ -46,9 +46,9 @@ export function AdminPoliceman() {
             <div
               style={{
                 fontSize: 20,
-                marginTop: "20px",
+                marginTop: '20px',
               }}
-            ></div>
+            />
             <TextField
               width="100%"
               header="Enter IIN (Individual identification number)"
@@ -68,19 +68,19 @@ export function AdminPoliceman() {
           </Box>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               gap: 2,
               flex: 1,
-              justifyContent: "start",
-              paddingLeft: "50px",
-              marginTop: "35px",
+              justifyContent: 'start',
+              paddingLeft: '50px',
+              marginTop: '35px',
             }}
           >
             <div
               style={{
                 fontSize: 15,
-                color: "gray",
+                color: 'gray',
               }}
             >
               Upload image
@@ -91,10 +91,10 @@ export function AdminPoliceman() {
         <div
           style={{
             marginTop: 20,
-            display: "flex",
-            flexDirection: "row",
+            display: 'flex',
+            flexDirection: 'row',
             gap: 10,
-            alignSelf: "start",
+            alignSelf: 'start',
           }}
         >
           <Button variant="outlined" onClick={() => navigate(-1)}>
