@@ -13,9 +13,11 @@ import {
 import { TextField } from '~/shared/ui/TextField';
 
 import RectangleImageUpload from '~/widgets/RectangleImageUpload/RectangleImageUpload';
+import { useState } from 'react';
 
 export function AdminPoliceman() {
   const navigate = useNavigate();
+  const [picture, setPicture] = useState('')
   return (
     <Box
       bgcolor="primary.contrastText"
@@ -85,7 +87,7 @@ export function AdminPoliceman() {
             >
               Upload image
             </div>
-            <RectangleImageUpload />
+            <RectangleImageUpload imageUrl={picture} setImageUrl={setPicture}/>
           </Box>
         </Box>
         <div

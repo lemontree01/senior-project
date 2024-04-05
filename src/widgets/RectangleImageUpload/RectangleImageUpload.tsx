@@ -1,7 +1,12 @@
 import React, { useState, ChangeEvent } from "react";
 
-const RectangleImageUpload: React.FC = () => {
-  const [imageUrl, setImageUrl] = useState<string>("");
+interface Q {
+  imageUrl: string;
+  setImageUrl: React.Dispatch<React.SetStateAction<string>>
+}
+
+const RectangleImageUpload: React.FC<Q> = (props) => {
+  const {imageUrl, setImageUrl} = props
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
