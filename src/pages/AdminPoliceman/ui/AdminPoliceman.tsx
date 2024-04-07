@@ -18,6 +18,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export function AdminPoliceman() {
   const navigate = useNavigate();
   const [picture, setPicture] = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
   return (
     <Box
       bgcolor="primary.contrastText"
@@ -91,7 +92,7 @@ export function AdminPoliceman() {
             >
               Upload image
             </div>
-            <RectangleImageUpload imageUrl={picture} setImageUrl={setPicture}/>
+            <RectangleImageUpload setImageFile={setImageFile} imageUrl={picture} setImageUrl={setPicture}/>
           </Box>
         </Box>
         <div

@@ -44,6 +44,12 @@ export function MainAdmin() {
         >
           Search Criminal
         </Link>
+        <Link
+          className="cursor-pointer"
+          onClick={() => navigate('/list-criminals')}
+        >
+          List Criminals
+        </Link>
       </Box>
     </Box>
   );

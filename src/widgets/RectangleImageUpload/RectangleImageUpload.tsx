@@ -4,16 +4,21 @@ import React, { useState, ChangeEvent, useEffect, useRef } from "react";
 interface Q {
   imageUrl: string;
   setImageUrl: React.Dispatch<React.SetStateAction<string>>;
+  setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
+
+
+
 const RectangleImageUpload: React.FC<Q> = (props) => {
-  const { imageUrl, setImageUrl } = props;
+  const { imageUrl, setImageUrl, setImageFile } = props;
 
   console.log("current", imageUrl);
   const inputRef = useRef<any>(null); // import useRef from react
 
   const handleImageChange = (event: any) => {
     setImageUrl(URL.createObjectURL(event.target.files[0]));
+    setImageFile(event.target.files[0])
   };
 
   const handleOnImageRemoveClick = () => {

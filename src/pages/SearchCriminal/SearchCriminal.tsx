@@ -299,7 +299,7 @@ export function SearchCriminal() {
                 }}
                 textAlign={"center"}
               >
-                Left eye: {(mouth / 100).toFixed(2)}
+                Mouth: {(mouth / 100).toFixed(2)}
               </Typography>
               <Slider
                 aria-label="Left Eye"

@@ -1,43 +1,103 @@
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import { useNavigate } from 'react-router-dom';
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopCircleIcon from "@mui/icons-material/StopCircle";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import { useNavigate } from "react-router-dom";
 import {
-  Box, Button, FormControlLabel, FormGroup, Switch, Typography,
-} from '@mui/material';
-import { TextField } from '~/shared/ui/TextField';
+  Box,
+  Button,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  Typography,
+} from "@mui/material";
+import { TextField } from "~/shared/ui/TextField";
 
-import RectangleImageUpload from '~/widgets/RectangleImageUpload/RectangleImageUpload';
-import { useState } from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { validateDateTime } from '@mui/x-date-pickers/internals';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import MuiTextField from '@mui/material/TextField'
-import styles from '~/shared/ui/TextField/TextField.module.scss';
-import { environments } from '~/environments';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import RectangleImageUpload from "~/widgets/RectangleImageUpload/RectangleImageUpload";
+import { useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
+import { validateDateTime } from "@mui/x-date-pickers/internals";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import MuiTextField from "@mui/material/TextField";
+import styles from "~/shared/ui/TextField/TextField.module.scss";
+import { environments } from "~/environments";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+const fileToBlob = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const blob = new Blob([reader.result as ArrayBuffer], { type: file.type });
+      resolve(blob);
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+};
+
+const blobToString = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      resolve(result);
+    };
+    reader.onerror = reject;
+    reader.readAsText(blob);
+  });
+};
+
 export function Admin() {
   const navigate = useNavigate();
 
-  const [iin, setIin] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [dob, setDob] = useState<string>('')
-  const [maritalStatus, setMaritalStatus] = useState('')
-  const [offense, setOffense] = useState('')
-  const [zipCode, setZipCode] = useState('')
-  const [picture, setPicture] = useState('noImage')
+  const [iin, setIin] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState<string>("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [offense, setOffense] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [gender, setGender] = useState("");
+  const [picture, setPicture] = useState("noImage");
+  const [imageFile, setImageFile] = useState<File | null>(null)
 
-  const onUpload = () => {
-    console.log('uploading')
+  function fileToBlobString(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        const result = event.target?.result as string | ArrayBuffer;
+        if (typeof result === 'string') {
+          resolve(result);
+        } else {
+          // Convert ArrayBuffer to base64 string
+          const base64String = btoa(
+            new Uint8Array(result).reduce((data, byte) => data + String.fromCharCode(byte), '')
+          );
+          resolve(base64String);
+        }
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const onUpload = async () => {
+    console.log("uploading");
     try {
+      let blob = null;
+      if (imageFile) {
+        const temp = await fileToBlob(imageFile);
+        blob = await fileToBlobString(imageFile);
+      }
+      console.log('blob:', blob, imageFile)
       fetch(`${environments.api}/import-criminals/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           iin,
@@ -47,144 +107,162 @@ export function Admin() {
           maritalStatus,
           offense,
           zipCode,
-          picture
-        })
-      }).then().catch(e => {
-        return;
+          picture: blob,
+          gender,
+        }),
       })
-    } catch(e) {
+        .then()
+        .catch((e) => {
+          return;
+        });
+    } catch (e) {
       return;
     }
-  }
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <Box
-      bgcolor="primary.contrastText"
-      className="pt-[30px] w-full min-h-[calc(100vh-69px)] flex flex-row justify-center"
-    >
       <Box
-        bgcolor="primary.contrastText container"
-        className="container"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 20,
-        }}
+        bgcolor="primary.contrastText"
+        className="pt-[30px] w-full min-h-[calc(100vh-69px)] flex flex-row justify-center"
       >
-        <Typography variant="h5">
-          <Button
-          onClick={() => navigate(-1)}
-          sx={{
-            borderRadius: 100
-          }}><ArrowBackIcon /></Button>Upload the new criminal to the database
-        </Typography>
-        <Box className="flex flex-row">
-
-          <Box style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            gap: 20,
-            flex: 2,
-          }}
-          >
-
-            <div
-              style={{
-                fontSize: 20,
-                marginTop: '20px',
-              }}
-            />
-            <TextField
-              width="100%"
-              header="Enter IIN (Individual identification number)"
-              placeholder="IIN"
-              value={iin}
-              onChange={(e) => setIin(e.target.value)} 
-            />
-            <TextField
-              width="100%"
-              header="Enter First Name"
-              placeholder="First Name"
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
-            />
-            <TextField
-              width="100%"
-              header="Enter Second Name"
-              placeholder="Second Name"
-              value={lastName}
-              onChange={e => setLastName(e.target.value)}
-            />
-            <TextField
-              width="100%"
-              header="Date of Birth"
-              placeholder="Date of Birth"
-              value={dob}
-              onChange={e => setDob(e.target.value)}
-            />
-          <TextField
-              width="100%"
-              header="Marital status"
-              placeholder="Marital status"
-              value={maritalStatus}
-              onChange={e => setMaritalStatus(e.target.value)}
-            />
-          <TextField
-              width="100%"
-              header="Offense"
-              placeholder="Offense"
-              value={offense}
-              onChange={e => setOffense(e.target.value)}
-            />
-          <TextField
-              width="100%"
-              header="Zip code"
-              placeholder="Zip code"
-              value={zipCode}
-              onChange={e => setZipCode(e.target.value)}
-            />
-
-          </Box>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            flex: 1,
-            justifyContent: 'start',
-            paddingLeft: '50px',
-            marginTop: '35px',
-          }}
-          >
-            <div
-              style={{
-                fontSize: 15,
-                color: 'gray',
-              }}
-
-            >
-              Upload image
-            </div>
-            <RectangleImageUpload imageUrl={picture} setImageUrl={setPicture}/>
-          </Box>
-        </Box>
-        <div
+        <Box
+          bgcolor="primary.contrastText container"
+          className="container"
           style={{
-            marginTop: 20,
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 10,
-            alignSelf: 'start',
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
           }}
         >
-          <Button variant="outlined" onClick={() => navigate(-1)}>
-            Back
-          </Button>
-          <Button variant="contained"               onClick={onUpload}>Upload</Button>
-        </div>
+          <Typography variant="h5">
+            <Button
+              onClick={() => navigate(-1)}
+              sx={{
+                borderRadius: 100,
+              }}
+            >
+              <ArrowBackIcon />
+            </Button>
+            Upload the new criminal to the database
+          </Typography>
+          <Box className="flex flex-row">
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                gap: 20,
+                flex: 2,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 20,
+                  marginTop: "20px",
+                }}
+              />
+              <TextField
+                width="100%"
+                header="Enter IIN (Individual identification number)"
+                placeholder="IIN"
+                value={iin}
+                onChange={(e) => setIin(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Enter First Name"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Enter Second Name"
+                placeholder="Second Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Date of Birth"
+                placeholder="Date of Birth"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Marital status"
+                placeholder="Marital status"
+                value={maritalStatus}
+                onChange={(e) => setMaritalStatus(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Offense"
+                placeholder="Offense"
+                value={offense}
+                onChange={(e) => setOffense(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Enter Gender"
+                placeholder="Gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              <TextField
+                width="100%"
+                header="Zip code"
+                placeholder="Zip code"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                flex: 1,
+                justifyContent: "start",
+                paddingLeft: "50px",
+                marginTop: "35px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                Upload image
+              </div>
+              <RectangleImageUpload
+                setImageFile={setImageFile}
+                imageUrl={picture}
+                setImageUrl={setPicture}
+              />
+            </Box>
+          </Box>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              flexDirection: "row",
+              gap: 10,
+              alignSelf: "start",
+            }}
+          >
+            <Button variant="outlined" onClick={() => navigate(-1)}>
+              Back
+            </Button>
+            <Button variant="contained" onClick={onUpload}>
+              Upload
+            </Button>
+          </div>
+        </Box>
       </Box>
-    </Box>
     </LocalizationProvider>
   );
 }
