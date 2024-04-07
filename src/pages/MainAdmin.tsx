@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export function MainAdmin() {
   const navigate = useNavigate();
@@ -19,7 +20,11 @@ export function MainAdmin() {
           gap: 20,
         }}
       >
-        <Typography variant="h5">Welcome to the Admin Dashboard</Typography>
+        <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>Welcome to the Admin Dashboard</Typography>
         <Typography variant="h6">Choose where to navigate:</Typography>
         <Link
           className="cursor-pointer"
@@ -32,6 +37,12 @@ export function MainAdmin() {
           onClick={() => navigate('/admin-policeman')}
         >
           Insert Policeman
+        </Link>
+        <Link
+          className="cursor-pointer"
+          onClick={() => navigate('/search-criminal')}
+        >
+          Search Criminal
         </Link>
       </Box>
     </Box>

@@ -3,8 +3,10 @@ import {
 } from '@mui/material';
 import { TextField } from '~/shared/ui/TextField';
 import { Text } from '~/shared/ui/Text/Text';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 export function SignIn() {
+  const navigate = useNavigate()
   return (
     <Box
       bgcolor="primary.contrastText"
@@ -19,7 +21,11 @@ export function SignIn() {
           gap: 20,
         }}
       >
-        <Typography variant="h5">Welcome to the login page</Typography>
+        <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>Welcome to the login page</Typography>
         <Typography
           style={{
             marginTop: '20px',

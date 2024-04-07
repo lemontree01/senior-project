@@ -8,7 +8,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import { styled } from "@mui/system";
 import Waveform from "./WaveFormElement";
 import { Box, Typography, Button } from "@mui/material";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export function VoicePrompt() {
   const navigate = useNavigate();
 
@@ -101,7 +101,11 @@ export function VoicePrompt() {
         gap: 20,
       }}
     >
-      <Typography variant="h5">
+      <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>
         Turn on the microphone and press the button when you are ready
         </Typography>
     

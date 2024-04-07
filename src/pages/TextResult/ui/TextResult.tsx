@@ -6,7 +6,7 @@ import { Text } from "~/shared/ui/Text/Text";
 import MockSketch from "~/shared/assets/mock-sketch.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -71,7 +71,11 @@ export const TextResult = () => {
             gap: 20,
           }}
         >
-          <Typography variant="h5">
+          <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>
             Generate New Sketch Menu
           </Typography>
           <Typography variant="h6">

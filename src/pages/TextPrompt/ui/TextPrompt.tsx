@@ -5,7 +5,7 @@ import {
   Box, TextField, Typography, Button,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export function TextPrompt() {
   const navigate = useNavigate();
   return (
@@ -22,7 +22,11 @@ export function TextPrompt() {
           gap: 20,
         }}
       >
-        <Typography variant="h5">
+        <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>
           Type a textual description of a criminal
         </Typography>
         <Typography

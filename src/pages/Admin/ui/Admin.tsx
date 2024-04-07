@@ -17,7 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import MuiTextField from '@mui/material/TextField'
 import styles from '~/shared/ui/TextField/TextField.module.scss';
 import { environments } from '~/environments';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export function Admin() {
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ export function Admin() {
   const [maritalStatus, setMaritalStatus] = useState('')
   const [offense, setOffense] = useState('')
   const [zipCode, setZipCode] = useState('')
-  const [picture, setPicture] = useState('')
+  const [picture, setPicture] = useState('noImage')
 
   const onUpload = () => {
     console.log('uploading')
@@ -73,7 +73,11 @@ export function Admin() {
         }}
       >
         <Typography variant="h5">
-          Upload the new criminal to the database
+          <Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>Upload the new criminal to the database
         </Typography>
         <Box className="flex flex-row">
 

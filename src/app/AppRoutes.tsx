@@ -12,6 +12,7 @@ import { Admin } from "~/pages/Admin";
 import { Theme } from "./App";
 import { AdminPoliceman } from "~/pages/AdminPoliceman/ui/AdminPoliceman";
 import { MainAdmin } from "~/pages/MainAdmin";
+import { SearchCriminal } from "~/pages/SearchCriminal/SearchCriminal";
 
 export const AppRoutes: React.FC<{theme: Theme}> = ({theme}) => {
   return (
@@ -28,6 +29,7 @@ export const AppRoutes: React.FC<{theme: Theme}> = ({theme}) => {
       <Route path="/admin-policeman" element={<AdminPoliceman />} />
       <Route path="/admin" element={<MainAdmin />} />
       <Route path="/bio" element={<Bio />} />
+      <Route path="/search-criminal" element={<SearchCriminal />} />
       <Route path="*" element={<Navigate to="/home" />} />
     </Routes>
   );

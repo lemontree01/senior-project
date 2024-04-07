@@ -14,7 +14,7 @@ import { TextField } from '~/shared/ui/TextField';
 
 import RectangleImageUpload from '~/widgets/RectangleImageUpload/RectangleImageUpload';
 import { useState } from 'react';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export function AdminPoliceman() {
   const navigate = useNavigate();
   const [picture, setPicture] = useState('')
@@ -32,7 +32,11 @@ export function AdminPoliceman() {
           gap: 20,
         }}
       >
-        <Typography variant="h5">
+        <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>
           Upload the new policeman to the database
         </Typography>
         <Box className="flex flex-row">

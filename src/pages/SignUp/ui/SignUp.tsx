@@ -3,8 +3,10 @@ import StopCircleIcon from '@mui/icons-material/StopCircle';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { Box, Typography, Button } from '@mui/material';
 import { TextField } from '~/shared/ui/TextField';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 export function SignUp() {
+  const navigate = useNavigate()
   return (
     <Box bgcolor="primary.contrastText" className="pt-[30px] w-full min-h-[calc(100vh-69px)] flex flex-row justify-center">
       <Box
@@ -16,7 +18,11 @@ export function SignUp() {
           gap: 20,
         }}
       >
-        <Typography variant="h5">
+        <Typography variant="h5"><Button
+          onClick={() => navigate(-1)}
+          sx={{
+            borderRadius: 100
+          }}><ArrowBackIcon /></Button>
           Welcome, let's create an account
         </Typography>
         <Typography
