@@ -109,12 +109,12 @@ export const ListCriminals = () => {
     return processed
   }
 
-  useEffect(() => {
-    myFunc().then(r => {
-      setCriminals(r);
-      setAllCriminals(r);
-    })
-  }, [response]);
+  // useEffect(() => {
+  //   myFunc().then(r => {
+  //     setCriminals(r);
+  //     setAllCriminals(r);
+  //   })
+  // }, [response]);
 
   useEffect(() => {
     setCriminals(filterAndSortCriminals(search, allCriminals))
@@ -126,6 +126,7 @@ export const ListCriminals = () => {
         return;
       }).then(r => {
         setCriminals(r ?? []);
+        setAllCriminals(r ?? []);
         setResponse('adsasd');
       })
     } catch(e) {
@@ -195,7 +196,7 @@ export const ListCriminals = () => {
                     <Typography variant="body2">Zip Code: {criminal.zipCode}</Typography>
                   </div> 
                   <div className='w-[30%] flex flex-row justify-end'>
-                    <img src={criminal.picture} className='h-[200px]'/>
+                    {/* <img src={criminal.picture} className='h-[200px]'/> */}
                   </div>
                 </div>
               )) : <Typography variant="body2">&#8203;{search && 'No criminals found'}</Typography>}
