@@ -1,11 +1,11 @@
 import "~/app/style/index.scss";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "~/widgets/Header";
 import { AppRoutes } from "./AppRoutes";
 import { Box, Divider, ThemeProvider, Tooltip, Typography, createTheme } from "@mui/material";
 import { lightTheme } from "~/shared/theme/lightTheme";
 import { darkTheme } from "~/shared/theme/darkTheme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export enum Theme {
   DARK = "DARK",

@@ -21,11 +21,7 @@ export function SignIn() {
           gap: 20,
         }}
       >
-        <Typography variant="h5"><Button
-          onClick={() => navigate(-1)}
-          sx={{
-            borderRadius: 100
-          }}><ArrowBackIcon /></Button>Welcome to the login page</Typography>
+        <Typography variant="h5">Welcome to the login page</Typography>
         <Typography
           style={{
             marginTop: '20px',

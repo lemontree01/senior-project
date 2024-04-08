@@ -32,7 +32,7 @@ export const AppRoutes: React.FC<{theme: Theme}> = ({theme}) => {
       <Route path="/bio" element={<Bio />} />
       <Route path="/search-criminal" element={<SearchCriminal />} />
       <Route path="/list-criminals" element={<ListCriminals />} />
-      <Route path="*" element={<Navigate to="/home" />} />
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
 }

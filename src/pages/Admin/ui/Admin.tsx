@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControlLabel,
   FormGroup,
   Switch,
@@ -60,7 +61,8 @@ export function Admin() {
   const [zipCode, setZipCode] = useState("");
   const [gender, setGender] = useState("");
   const [picture, setPicture] = useState("noImage");
-  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploaded, setIsUploaded] = useState<'error' | 'success' | 'loading' | 'initial'>('initial');
 
   function fileToBlobString(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -85,6 +87,7 @@ export function Admin() {
   }
 
   const onUpload = async () => {
+    setIsUploaded('loading')
     console.log("uploading");
     try {
       let blob = null;
@@ -111,11 +114,15 @@ export function Admin() {
           gender,
         }),
       })
-        .then()
+        .then(() => {
+          setIsUploaded('success')
+        })
         .catch((e) => {
+          setIsUploaded('error')
           return;
         });
     } catch (e) {
+      setIsUploaded('error')
       return;
     }
   };
@@ -248,18 +255,35 @@ export function Admin() {
           <div
             style={{
               marginTop: 20,
+              marginBottom: 20,
               display: "flex",
               flexDirection: "row",
               gap: 10,
               alignSelf: "start",
             }}
           >
-            <Button variant="outlined" onClick={() => navigate(-1)}>
-              Back
+            <Button sx={{
+              width: 120,
+              height: 40
+            }}variant='outlined' onClick={onUpload}>
+            {isUploaded === 'loading' ? <CircularProgress size='20px' sx={{
+                fontSize: '12px'
+              }}/> : <>Upload</>}
             </Button>
-            <Button variant="contained" onClick={onUpload}>
-              Upload
-            </Button>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              marginBottom: 50,
+              display: "flex",
+              flexDirection: "row",
+              gap: 10,
+              alignSelf: "start",
+            }}
+          >
+            {isUploaded === 'success' && <span className='text-green-400'>Successfully loaded</span>}
+            {isUploaded === 'error' && <span className='text-red-400'>Server error, failed to load</span>}
+
           </div>
         </Box>
       </Box>
