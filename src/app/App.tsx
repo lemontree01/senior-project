@@ -12,8 +12,17 @@ export enum Theme {
   LIGHT = "LIGHT",
 }
 
+export interface User {
+  name: string | null;
+  password: string | null;
+}
+
 export function App() {
   const [appTheme, setAppTheme] = useState<Theme>(Theme.DARK);
+  const [user, setUser] = useState<User>({
+    name: null,
+    password: null,
+  })
 
   return (
     <ThemeProvider theme={appTheme === Theme.DARK ? darkTheme : lightTheme}>
@@ -21,7 +30,7 @@ export function App() {
         <Header setAppTheme={setAppTheme} appTheme={appTheme} />
         <Divider sx={{ bgcolor: "primary.contrastText" }} />
         <div className='pt-[68px]'>
-          <AppRoutes theme={appTheme}/>
+          <AppRoutes setUser={setUser} user={user} theme={appTheme}/>
         </div>
         {/* <Box id="contacts" className="flex-1 flex flex-col items-end justify-around h-full gap-0" bgcolor="primary.contrastText">
           <Tooltip title="maxim.tsoy@nu.edu.kz">
