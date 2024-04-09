@@ -27,7 +27,7 @@ export function App() {
   return (
     <ThemeProvider theme={appTheme === Theme.DARK ? darkTheme : lightTheme}>
       <BrowserRouter>
-        <Header setAppTheme={setAppTheme} appTheme={appTheme} />
+        <Header setAppTheme={setAppTheme} appTheme={appTheme} user={user} setUser={setUser}/>
         <Divider sx={{ bgcolor: "primary.contrastText" }} />
         <div className='pt-[68px]'>
           <AppRoutes setUser={setUser} user={user} theme={appTheme}/>

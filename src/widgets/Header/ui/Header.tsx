@@ -8,17 +8,32 @@ import MuiLink from "@mui/material/Link";
 import { pages } from "~/shared/pages";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
-import { Theme } from "~/app/App";
+import { Theme, User } from "~/app/App";
 
 interface IHeader {
   setAppTheme: (...args: any[]) => any;
   appTheme: Theme;
+  user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
-export const Header: React.FC<IHeader> = ({ setAppTheme, appTheme }) => {
+export const Header: React.FC<IHeader> = ({
+  setAppTheme,
+  appTheme,
+  setUser,
+  user,
+}) => {
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed', width: '100vw', background: "primary.contrastText", zIndex: "10000" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "fixed",
+        width: "100vw",
+        background: "primary.contrastText",
+        zIndex: "10000",
+      }}
+    >
       <AppBar position="static" className="w-full h-[70px]">
         <Toolbar>
           <Box className="w-[100%] p-[20px] flex flex-row justify-between items-center mx-auto">
@@ -54,18 +69,18 @@ export const Header: React.FC<IHeader> = ({ setAppTheme, appTheme }) => {
                 </MuiLink>
               ))}
               <MuiLink
-              href="/home#contacts"
-                  sx={{
-                    my: 2,
-                    display: "block",
-                    fontSize: 14,
-                    cursor: "pointer",
-                  }}
-                  underline="none"
-                  color="secondary"
-                >
-                  Contacts
-                </MuiLink>
+                href="/home#contacts"
+                sx={{
+                  my: 2,
+                  display: "block",
+                  fontSize: 14,
+                  cursor: "pointer",
+                }}
+                underline="none"
+                color="secondary"
+              >
+                Contacts
+              </MuiLink>
             </Box>
             <Box className="flex flex-row gap-[10px] justify-end">
               <IconButton
@@ -82,8 +97,36 @@ export const Header: React.FC<IHeader> = ({ setAppTheme, appTheme }) => {
                   <NightlightRoundIcon />
                 )}
               </IconButton>
-              <Button variant="outlined" onClick={() => navigate("/login")}>Login</Button>
-              <Button variant="contained" onClick={() => navigate("/register")}>Register</Button>
+              {user.name && (
+                <Typography className="self-center" variant="h6">Welcome, {user.name}</Typography>
+              )}
+              {user.name ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      setUser({
+                        name: null,
+                        password: null,
+                      })
+                    }
+                  >
+                    Log out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outlined" onClick={() => navigate("/login")}>
+                    Login
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => navigate("/register")}
+                  >
+                    Register
+                  </Button>
+                </>
+              )}
             </Box>
           </Box>
         </Toolbar>

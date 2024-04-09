@@ -29,7 +29,10 @@ export const AppRoutes: React.FC<IApp> = ({ theme, user, setUser }) => {
           path="/login"
           element={<SignIn setUser={setUser} user={user} />}
         />
-        <Route path="/register" element={<SignUp />} />
+        <Route
+          path="/register"
+          element={<SignUp setUser={setUser} user={user} />}
+        />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     );
@@ -40,10 +43,13 @@ export const AppRoutes: React.FC<IApp> = ({ theme, user, setUser }) => {
           path="/login"
           element={<SignIn setUser={setUser} user={user} />}
         />
+        <Route
+          path="/register"
+          element={<SignUp setUser={setUser} user={user} />}
+        />
         <Route path="/home" element={<Home theme={theme} />} />
         <Route path="/audio" element={<VoicePrompt />} />
         <Route path="/text" element={<TextPrompt />} />
-        <Route path="/register" element={<SignUp />} />
         <Route path="/result" element={<Result />} />
         <Route path="/text-result" element={<TextResult />} />
         {/* <Route path="/audio-result" element={<AudioResult />} /> */}
