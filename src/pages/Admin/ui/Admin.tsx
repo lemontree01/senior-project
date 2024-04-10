@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { TextField } from "~/shared/ui/TextField";
+import InputMask from "react-input-mask";
 
 import RectangleImageUpload from "~/widgets/RectangleImageUpload/RectangleImageUpload";
 import { useState } from "react";
@@ -29,7 +30,9 @@ const fileToBlob = (file: File): Promise<Blob> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const blob = new Blob([reader.result as ArrayBuffer], { type: file.type });
+      const blob = new Blob([reader.result as ArrayBuffer], {
+        type: file.type,
+      });
       resolve(blob);
     };
     reader.onerror = reject;
@@ -62,19 +65,32 @@ export function Admin() {
   const [gender, setGender] = useState("");
   const [picture, setPicture] = useState("noImage");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isUploaded, setIsUploaded] = useState<'error' | 'success' | 'loading' | 'initial'>('initial');
+  const [isUploaded, setIsUploaded] = useState<
+    "error" | "success" | "loading" | "initial"
+  >("initial");
+
+  const [nose_len, setnose_len] = useState("");
+  const [right_brow_size, setright_brow_size] = useState("");
+  const [left_brow_size, setleft_brow_size] = useState("");
+  const [left_eye_size, setleft_eye_size] = useState("");
+  const [right_eye_size, setright_eye_size] = useState("");
+  const [nose_size, setnose_size] = useState("");
+  const [lips_size, setlips_size] = useState("");
 
   function fileToBlobString(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
         const result = event.target?.result as string | ArrayBuffer;
-        if (typeof result === 'string') {
+        if (typeof result === "string") {
           resolve(result);
         } else {
           // Convert ArrayBuffer to base64 string
           const base64String = btoa(
-            new Uint8Array(result).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            new Uint8Array(result).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
           );
           resolve(base64String);
         }
@@ -87,7 +103,7 @@ export function Admin() {
   }
 
   const onUpload = async () => {
-    setIsUploaded('loading')
+    setIsUploaded("loading");
     console.log("uploading");
     try {
       let blob = null;
@@ -95,7 +111,7 @@ export function Admin() {
         const temp = await fileToBlob(imageFile);
         blob = await fileToBlobString(imageFile);
       }
-      console.log('blob:', blob, imageFile)
+      console.log("blob:", blob, imageFile);
       fetch(`${environments.api}/import-criminals/`, {
         method: "POST",
         headers: {
@@ -114,15 +130,16 @@ export function Admin() {
           gender,
         }),
       })
-        .then(() => {
-          setIsUploaded('success')
+        .then((r) => {
+          setIsUploaded("success");
+          
         })
         .catch((e) => {
-          setIsUploaded('error')
+          setIsUploaded("error");
           return;
         });
     } catch (e) {
-      setIsUploaded('error')
+      setIsUploaded("error");
       return;
     }
   };
@@ -195,6 +212,7 @@ export function Admin() {
                 header="Date of Birth"
                 placeholder="Date of Birth"
                 value={dob}
+                isDate
                 onChange={(e) => setDob(e.target.value)}
               />
               <TextField
@@ -262,13 +280,24 @@ export function Admin() {
               alignSelf: "start",
             }}
           >
-            <Button sx={{
-              width: 120,
-              height: 40
-            }}variant='outlined' onClick={onUpload}>
-            {isUploaded === 'loading' ? <CircularProgress size='20px' sx={{
-                fontSize: '12px'
-              }}/> : <>Upload</>}
+            <Button
+              sx={{
+                width: 120,
+                height: 40,
+              }}
+              variant="outlined"
+              onClick={onUpload}
+            >
+              {isUploaded === "loading" ? (
+                <CircularProgress
+                  size="20px"
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                />
+              ) : (
+                <>Upload</>
+              )}
             </Button>
           </div>
           <div
@@ -281,9 +310,12 @@ export function Admin() {
               alignSelf: "start",
             }}
           >
-            {isUploaded === 'success' && <span className='text-green-400'>Successfully loaded</span>}
-            {isUploaded === 'error' && <span className='text-red-400'>Server error, failed to load</span>}
-
+            {isUploaded === "success" && (
+              <span className="text-green-400">Successfully loaded</span>
+            )}
+            {isUploaded === "error" && (
+              <span className="text-red-400">Server error, failed to load</span>
+            )}
           </div>
         </Box>
       </Box>
