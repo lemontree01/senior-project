@@ -393,7 +393,7 @@ export function SearchCriminal() {
           </div>
           <div className="flex flex-row flex-wrap justify-between">
             {criminals.length ? (
-              [...criminals, ...criminals,...criminals].map((criminal, i) => (
+              [...criminals].map((criminal, i) => (
                 <div className="w-[33%] my-[15px] h-[250px]">
                   <Tooltip title={<>
                     <Typography>{criminal.lastName} {criminal.firstName}</Typography>
