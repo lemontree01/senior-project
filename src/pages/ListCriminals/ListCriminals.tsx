@@ -185,7 +185,9 @@ export const ListCriminals = () => {
                 marginTop: "20px",
               }}
             />
-           <TextField disabled={!allCriminals.length} placeholder='Search...' value={search} onChange={(e) => setSearch(e.target.value)}/>
+           <TextField style={{
+            width: '80vw'
+           }} disabled={!allCriminals.length} placeholder='Search...' value={search} onChange={(e) => setSearch(e.target.value)}/>
            <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -205,7 +207,10 @@ export const ListCriminals = () => {
                     <Typography variant="body2">Zip Code: {criminal.zipCode}</Typography>
                   </div> 
                   <div className='w-[30%] flex flex-row justify-end'>
-                    <img src={criminal.picture} className='h-[200px]' onError={() => {
+                    
+                    <img src={
+                      //@ts-ignore
+                      criminal.image} className='h-[200px]' onError={() => {
                       
                     }}/>
                   </div>
@@ -221,6 +226,7 @@ export const ListCriminals = () => {
             flexDirection: "row",
             gap: 10,
             alignSelf: "start",
+            marginBottom: '50px',
           }}
         >
           <Button variant="outlined" onClick={() => navigate(-1)}>

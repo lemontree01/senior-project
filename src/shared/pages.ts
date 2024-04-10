@@ -13,8 +13,8 @@ export const pages: Page[] = [
     route: "/text",
   },
   {
-    name: "Audio",
-    route: "/audio",
+    name: "Manual search",
+    route: "/search-criminal",
   },
   // {
   //   name: "Login",

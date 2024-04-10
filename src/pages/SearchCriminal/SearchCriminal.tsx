@@ -10,6 +10,7 @@ import {
   FormGroup,
   Slider,
   Switch,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { TextField } from "~/shared/ui/TextField";
@@ -39,15 +40,17 @@ interface Criminal {
   image: string;
 }
 
-const tempCriminals: Criminal[] = [{
-  firstName: 'dassad',
-  iin: 'dsaads',
-  image: 'sdadsd',
-  lastName: 'dasdas',
-  maritalStatus: 'dssddas',
-  offense: 'dadsds',
-  zipCode:'ewrewrewrew'
-}]
+const tempCriminals: Criminal[] = [
+  {
+    firstName: "dassad",
+    iin: "dsaads",
+    image: "sdadsd",
+    lastName: "dasdas",
+    maritalStatus: "dssddas",
+    offense: "dadsds",
+    zipCode: "ewrewrewrew",
+  },
+];
 
 export function SearchCriminal() {
   const navigate = useNavigate();
@@ -368,18 +371,60 @@ export function SearchCriminal() {
             {/* <Button variant="outlined" onClick={() => navigate(-1)}>
               Back
             </Button> */}
-            <Button sx={{
-              width: 120,
-              height: 40
-            }}variant='outlined' onClick={onUpload}>
-            {isLoading ? <CircularProgress size='20px' sx={{
-                fontSize: '12px'
-              }}/> : <>Search</>}
+            <Button
+              sx={{
+                width: 120,
+                height: 40,
+              }}
+              variant="outlined"
+              onClick={onUpload}
+            >
+              {isLoading ? (
+                <CircularProgress
+                  size="20px"
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                />
+              ) : (
+                <>Search</>
+              )}
             </Button>
           </div>
-          {criminals.length ? criminals.map((criminal, i) => <div key={i} className={`flex flex-row my-[10px]`}>
-                  <div className='flex flex-col w-[30%]'>
-                    <Typography variant="body2">First Name: {criminal.firstName}</Typography>
+          <div className="flex flex-row flex-wrap justify-between">
+            {criminals.length ? (
+              [...criminals, ...criminals,...criminals].map((criminal, i) => (
+                <div className="w-[33%] my-[15px] h-[250px]">
+                  <Tooltip title={<>
+                    <Typography>{criminal.lastName} {criminal.firstName}</Typography>
+                    <Typography>IIN: {criminal.iin}</Typography>
+                    <Typography>Marital status: {criminal.maritalStatus}</Typography>
+                    <Typography>Offense: {criminal.offense}</Typography>
+                    <Typography>Zip Code: {criminal.zipCode}</Typography>
+                  </>}>
+                  <img
+                    src={criminal.image}
+                    className="h-[200px]"
+                    onError={() => {}}
+                  />
+                  </Tooltip>
+                </div>
+              ))
+            ) : (
+              <Typography variant="body2">
+                &#8203;{error ? "Server error" : "No criminals found"}
+              </Typography>
+            )}
+          </div>
+        </Box>
+      </Box>
+    </LocalizationProvider>
+  );
+}
+
+/**
+ * 
+ *  <Typography variant="body2">First Name: {criminal.firstName}</Typography>
                     <Typography variant="body2">Last Name: {criminal.lastName}</Typography>
                     <Typography variant="body2">IIN: {criminal.iin}</Typography>
                   </div> 
@@ -389,13 +434,4 @@ export function SearchCriminal() {
                     <Typography variant="body2">Zip Code: {criminal.zipCode}</Typography>
                   </div> 
                   <div className='w-[30%] flex flex-row justify-end'>
-                    <img src={criminal.image} className='h-[200px]' onError={() => {
-                      
-                    }}/>
-                  </div>
-                </div>) : <Typography variant="body2">&#8203;{error ? 'Server error' : 'No criminals found'}</Typography>}
-        </Box>
-      </Box>
-    </LocalizationProvider>
-  );
-}
+ */

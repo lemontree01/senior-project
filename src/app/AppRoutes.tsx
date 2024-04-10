@@ -14,6 +14,7 @@ import { AdminPoliceman } from "~/pages/AdminPoliceman/ui/AdminPoliceman";
 import { MainAdmin } from "~/pages/MainAdmin";
 import { SearchCriminal } from "~/pages/SearchCriminal/SearchCriminal";
 import { ListCriminals } from "~/pages/ListCriminals/ListCriminals";
+import { Contacts } from "~/pages/Contacts/Contacts";
 
 interface IApp {
   theme: Theme;
@@ -33,12 +34,14 @@ export const AppRoutes: React.FC<IApp> = ({ theme, user, setUser }) => {
           path="/register"
           element={<SignUp setUser={setUser} user={user} />}
         />
+        <Route path="/contacts" element={<Contacts />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     );
   } else {
     return (
       <Routes>
+        <Route path="/contacts" element={<Contacts />} />
         <Route
           path="/login"
           element={<SignIn setUser={setUser} user={user} />}

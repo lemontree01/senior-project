@@ -69,7 +69,7 @@ export const Header: React.FC<IHeader> = ({
                 </MuiLink>
               ))}
               <MuiLink
-                href="/home#contacts"
+                onClick={() => navigate('/contacts')}
                 sx={{
                   my: 2,
                   display: "block",
