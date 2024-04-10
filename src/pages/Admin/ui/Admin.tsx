@@ -249,9 +249,12 @@ export function Admin() {
                 onChange={(e) => setOffense(e.target.value)}
               />
               <TextField
+                onMale={() => setGender('male')}
+                onFemale={() => setGender('female')}
                 width="100%"
                 header="Enter Gender"
                 placeholder="Gender"
+                isGender
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               />
