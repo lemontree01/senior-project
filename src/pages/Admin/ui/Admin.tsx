@@ -77,6 +77,12 @@ export function Admin() {
   const [nose_size, setnose_size] = useState("");
   const [lips_size, setlips_size] = useState("");
 
+
+
+
+
+
+
   function fileToBlobString(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -132,7 +138,20 @@ export function Admin() {
       })
         .then((r) => {
           setIsUploaded("success");
-          
+          return r.json()
+        })
+        .catch((e) => {
+          setIsUploaded("error");
+          return;
+        })
+        .then((r) => {
+          setnose_len(r?.nose_length);
+          setright_brow_size(r?.right_brow_size);
+          setleft_brow_size(r?.left_brow_size);
+          setleft_eye_size(r?.left_eye_size);
+          setright_eye_size(r?.right_eye_size);
+          setnose_size(r?.nose_size);
+          setlips_size(r?.lips_size);
         })
         .catch((e) => {
           setIsUploaded("error");
@@ -268,6 +287,15 @@ export function Admin() {
                 imageUrl={picture}
                 setImageUrl={setPicture}
               />
+              <div className='flex flex-col gap-5'>
+              {nose_len && <Typography variant='body2'>Nose_length: {nose_len}</Typography>}
+              {right_brow_size && <Typography variant='body2'>Right brow size: {right_brow_size}</Typography>}
+              {left_brow_size && <Typography variant='body2'>Left brow size: {left_brow_size}</Typography>}
+              {left_eye_size && <Typography variant='body2'>Left eye size: {left_eye_size}</Typography>}
+              {right_eye_size && <Typography variant='body2'>Right eye size: {right_eye_size}</Typography>}
+              {nose_size && <Typography variant='body2'>Nose size: {nose_size}</Typography>}
+              {lips_size && <Typography variant='body2'>Lips size: {lips_size}</Typography>}
+            </div>
             </Box>
           </Box>
           <div
@@ -299,6 +327,7 @@ export function Admin() {
                 <>Upload</>
               )}
             </Button>
+            
           </div>
           <div
             style={{
@@ -316,6 +345,8 @@ export function Admin() {
             {isUploaded === "error" && (
               <span className="text-red-400">Server error, failed to load</span>
             )}
+
+          
           </div>
         </Box>
       </Box>
