@@ -30,6 +30,8 @@ import MuiTextField from "@mui/material/TextField";
 import styles from "~/shared/ui/TextField/TextField.module.scss";
 import { environments } from "~/environments";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Checkbox from '@mui/material/Checkbox';
+
 
 export interface Criminal {
   firstName: string;
@@ -63,8 +65,9 @@ export function SearchCriminal() {
   const [left_brow, setLeft_brow] = useState(50);
   const [right_brow, setRight_brow] = useState(50);
   const [mouth, setMouth] = useState(50);
-  const [gender, setGender] = useState<"female" | "male">("female");
-
+  //const [gender, setGender] = useState<"female" | "male">("female");
+  const [maleTicked, setMaleTicked] = useState(false);
+  const [femaleTicked, setFemaleTicked] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -88,7 +91,7 @@ export function SearchCriminal() {
           left_brow: +(left_brow / 100).toFixed(2),
           right_brow: +(right_brow / 100).toFixed(2),
           mouth: +(mouth / 100).toFixed(2),
-          gender
+          gender: maleTicked && femaleTicked ? 'both' : maleTicked ? 'male' : 'female',
         }),
       });
       const data = (await response.json()) as Criminal[];
@@ -376,9 +379,9 @@ export function SearchCriminal() {
                   >
                     Gender
                   </Typography>
-                  <Radio checked={gender==='male'} onClick={() => setGender('male')}/>
+                  <Checkbox checked={maleTicked} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMaleTicked(e.target.checked)}/>
                   <Typography variant="body2">Male</Typography>
-                  <Radio checked={gender === 'female'} onClick={() => setGender('female')}/>
+                  <Checkbox checked={femaleTicked} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFemaleTicked(e.target.checked)}/>
                   <Typography variant="body2">Female</Typography>
                 </Box>
               </Box>
