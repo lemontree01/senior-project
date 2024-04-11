@@ -364,7 +364,7 @@ export const Home: React.FC<{
                 }}
               >
                 <Typography variant="body2">
-                  Log in or sign up with your work email
+                  Log in or sign up with your IIN
                 </Typography>
               </li>
             </ul>

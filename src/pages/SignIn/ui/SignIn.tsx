@@ -56,8 +56,8 @@ export const SignIn: React.FC<ISignIn> = (props) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             width="50%"
-            header="Work Email"
-            placeholder="Your work email"
+            header="Your IIN"
+            placeholder="Your IIN"
           />
           <TextField
             value={password}

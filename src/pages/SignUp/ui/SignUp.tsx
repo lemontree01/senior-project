@@ -83,10 +83,10 @@ export const SignUp: React.FC<ISignIn> = ({ setUser, user }) => {
           </div>
           <TextField
             width="100%"
-            header="Work Email"
+            header="Your IIN"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Your work email"
+            placeholder="Your IIN"
           />
           <TextField
             width="100%"
