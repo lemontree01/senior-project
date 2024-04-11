@@ -47,6 +47,7 @@ export function AdminPoliceman() {
 const [department, setDepartment] = useState('')
 const [badge_number, setBadgeNumber] = useState('')
 const [role, setRole] = useState('')
+const [password, setPassword] = useState('')
 
 
 
@@ -101,7 +102,8 @@ const [role, setRole] = useState('')
           dob, 
           department: 
           badge_number,
-          role
+          role,
+          password
         }),
       })
         .then((r) => {
@@ -144,7 +146,7 @@ const [role, setRole] = useState('')
         >
           <ArrowBackIcon />
         </Button>
-        Upload the new policeman to the database
+        Upload the new user to the database
       </Typography>
       <Box className="flex flex-row">
         <Box
@@ -214,6 +216,13 @@ const [role, setRole] = useState('')
             isRole
             value={role}
             onChange={(e) => setRole(e.target.value)}
+          />
+                    <TextField
+            width="100%"
+            header="User's password"
+            placeholder="User's password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Box>
       </Box>

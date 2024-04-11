@@ -8,6 +8,7 @@ import {
   CircularProgress,
   FormControlLabel,
   FormGroup,
+  Radio,
   Slider,
   Switch,
   Tooltip,
@@ -62,6 +63,7 @@ export function SearchCriminal() {
   const [left_brow, setLeft_brow] = useState(50);
   const [right_brow, setRight_brow] = useState(50);
   const [mouth, setMouth] = useState(50);
+  const [gender, setGender] = useState<"female" | "male">("female");
 
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,6 +88,7 @@ export function SearchCriminal() {
           left_brow: +(left_brow / 100).toFixed(2),
           right_brow: +(right_brow / 100).toFixed(2),
           mouth: +(mouth / 100).toFixed(2),
+          gender
         }),
       });
       const data = (await response.json()) as Criminal[];
@@ -355,6 +358,29 @@ export function SearchCriminal() {
                     }}
                   />
                 </Box>
+                <Box
+                  style={{
+                    fontSize: 20,
+                    marginTop: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      width: "40%",
+                    }}
+                    textAlign={"center"}
+                  >
+                    Gender
+                  </Typography>
+                  <Radio checked={gender==='male'} onClick={() => setGender('male')}/>
+                  <Typography variant="body2">Male</Typography>
+                  <Radio checked={gender === 'female'} onClick={() => setGender('female')}/>
+                  <Typography variant="body2">Female</Typography>
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -395,18 +421,26 @@ export function SearchCriminal() {
             {criminals.length ? (
               [...criminals].map((criminal, i) => (
                 <div className="w-[33%] my-[15px] h-[250px]">
-                  <Tooltip title={<>
-                    <Typography>{criminal.lastName} {criminal.firstName}</Typography>
-                    <Typography>IIN: {criminal.iin}</Typography>
-                    <Typography>Marital status: {criminal.maritalStatus}</Typography>
-                    <Typography>Offense: {criminal.offense}</Typography>
-                    <Typography>Zip Code: {criminal.zipCode}</Typography>
-                  </>}>
-                  <img
-                    src={criminal.image}
-                    className="h-[200px]"
-                    onError={() => {}}
-                  />
+                  <Tooltip
+                    title={
+                      <>
+                        <Typography>
+                          {criminal.lastName} {criminal.firstName}
+                        </Typography>
+                        <Typography>IIN: {criminal.iin}</Typography>
+                        <Typography>
+                          Marital status: {criminal.maritalStatus}
+                        </Typography>
+                        <Typography>Offense: {criminal.offense}</Typography>
+                        <Typography>Zip Code: {criminal.zipCode}</Typography>
+                      </>
+                    }
+                  >
+                    <img
+                      src={criminal.image}
+                      className="h-[200px]"
+                      onError={() => {}}
+                    />
                   </Tooltip>
                 </div>
               ))

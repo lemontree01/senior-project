@@ -121,12 +121,12 @@ export const Header: React.FC<IHeader> = ({
                   <Button variant="outlined" onClick={() => navigate("/login")}>
                     Login
                   </Button>
-                  <Button
+                  {/* <Button
                     variant="contained"
                     onClick={() => navigate("/register")}
                   >
                     Register
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </Box>
