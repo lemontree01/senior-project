@@ -78,7 +78,7 @@ const RectangleImageUpload: React.FC<Q> = (props) => {
         />
       </div>
       {imageUrl !== "noImage" ? (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-[20px]">
           <div
             style={{
               color: "green",

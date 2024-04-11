@@ -414,8 +414,8 @@ export const Home: React.FC<{
       </Box>
       <Divider />
 
-      <SignUp />
-      <Divider />
+      {/* <SignUp /> */}
+      {/* <Divider /> */}
       <Box
         className="container relative top-[-40px]"
         style={{

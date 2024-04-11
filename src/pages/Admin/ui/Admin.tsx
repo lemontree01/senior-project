@@ -77,12 +77,6 @@ export function Admin() {
   const [nose_size, setnose_size] = useState("");
   const [lips_size, setlips_size] = useState("");
 
-
-
-
-
-
-
   function fileToBlobString(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -138,7 +132,7 @@ export function Admin() {
       })
         .then((r) => {
           setIsUploaded("success");
-          return r.json()
+          return r.json();
         })
         .catch((e) => {
           setIsUploaded("error");
@@ -249,8 +243,8 @@ export function Admin() {
                 onChange={(e) => setOffense(e.target.value)}
               />
               <TextField
-                onMale={() => setGender('male')}
-                onFemale={() => setGender('female')}
+                onMale={() => setGender("male")}
+                onFemale={() => setGender("female")}
                 width="100%"
                 header="Enter Gender"
                 placeholder="Gender"
@@ -290,15 +284,46 @@ export function Admin() {
                 imageUrl={picture}
                 setImageUrl={setPicture}
               />
-              <div className='flex flex-col gap-5'>
-              {nose_len && <Typography variant='body2'>Nose_length: {nose_len}</Typography>}
-              {right_brow_size && <Typography variant='body2'>Right brow size: {right_brow_size}</Typography>}
-              {left_brow_size && <Typography variant='body2'>Left brow size: {left_brow_size}</Typography>}
-              {left_eye_size && <Typography variant='body2'>Left eye size: {left_eye_size}</Typography>}
-              {right_eye_size && <Typography variant='body2'>Right eye size: {right_eye_size}</Typography>}
-              {nose_size && <Typography variant='body2'>Nose size: {nose_size}</Typography>}
-              {lips_size && <Typography variant='body2'>Lips size: {lips_size}</Typography>}
-            </div>
+              <div className="flex flex-col gap-5">
+                {nose_len && <Typography variant="h6" color="primary.main">
+                  The calculated result:
+                </Typography>}
+                {nose_len && (
+                  <Typography variant="body2">
+                    Nose_length: {nose_len}
+                  </Typography>
+                )}
+                {right_brow_size && (
+                  <Typography variant="body2">
+                    Right brow size: {right_brow_size}
+                  </Typography>
+                )}
+                {left_brow_size && (
+                  <Typography variant="body2">
+                    Left brow size: {left_brow_size}
+                  </Typography>
+                )}
+                {left_eye_size && (
+                  <Typography variant="body2">
+                    Left eye size: {left_eye_size}
+                  </Typography>
+                )}
+                {right_eye_size && (
+                  <Typography variant="body2">
+                    Right eye size: {right_eye_size}
+                  </Typography>
+                )}
+                {nose_size && (
+                  <Typography variant="body2">
+                    Nose size: {nose_size}
+                  </Typography>
+                )}
+                {lips_size && (
+                  <Typography variant="body2">
+                    Lips size: {lips_size}
+                  </Typography>
+                )}
+              </div>
             </Box>
           </Box>
           <div
@@ -330,11 +355,10 @@ export function Admin() {
                 <>Upload</>
               )}
             </Button>
-            
           </div>
           <div
             style={{
-              marginTop: 20,
+              marginTop: 10,
               marginBottom: 50,
               display: "flex",
               flexDirection: "row",
@@ -348,8 +372,6 @@ export function Admin() {
             {isUploaded === "error" && (
               <span className="text-red-400">Server error, failed to load</span>
             )}
-
-          
           </div>
         </Box>
       </Box>

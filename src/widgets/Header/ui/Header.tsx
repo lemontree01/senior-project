@@ -69,7 +69,7 @@ export const Header: React.FC<IHeader> = ({
                 </MuiLink>
               ))}
               <MuiLink
-                onClick={() => navigate('/contacts')}
+                onClick={() => navigate("/contacts")}
                 sx={{
                   my: 2,
                   display: "block",
@@ -83,6 +83,11 @@ export const Header: React.FC<IHeader> = ({
               </MuiLink>
             </Box>
             <Box className="flex flex-row gap-[10px] justify-end">
+              {user.name && (
+                <Typography className="self-center mr-[10px]" variant="h6">
+                  Welcome, {user.name}
+                </Typography>
+              )}
               <IconButton
                 aria-label="delete"
                 onClick={() =>
@@ -97,9 +102,6 @@ export const Header: React.FC<IHeader> = ({
                   <NightlightRoundIcon />
                 )}
               </IconButton>
-              {user.name && (
-                <Typography className="self-center" variant="h6">Welcome, {user.name}</Typography>
-              )}
               {user.name ? (
                 <>
                   <Button
