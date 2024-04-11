@@ -186,14 +186,14 @@ export const ListCriminals = () => {
               }}
             />
            <TextField style={{
-            width: '80vw'
+            width: '100%'
            }} disabled={!allCriminals.length} placeholder='Search...' value={search} onChange={(e) => setSearch(e.target.value)}/>
            <div style={{
             display: 'flex',
             flexDirection: 'column',
            }}>
               {criminals.length ? criminals.map((criminal, i) => (
-                <div key={i} className={`flex flex-row my-[10px]`}>
+                <div key={i} className={`flex flex-row my-[10px] justify-between`}>
                   <div className='flex flex-col w-[30%]'>
                     <Typography variant="body2">First Name: {criminal.firstName}</Typography>
                     <Typography variant="body2">Last Name: {criminal.lastName}</Typography>
