@@ -26,7 +26,7 @@ import styles from "~/shared/ui/TextField/TextField.module.scss";
 import { environments } from "~/environments";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const fileToBlob = (file: File): Promise<Blob> => {
+export const fileToBlob = (file: File): Promise<Blob> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {

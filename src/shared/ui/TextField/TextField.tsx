@@ -10,11 +10,39 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   onMale?: any;
   onFemale?: any;
   isGender?: boolean;
+  isRole?: boolean;
 }
 
 export const TextField = (props: TextFieldProps) => {
-  const { header, width, isDate, isGender, onChange, value, onMale, onFemale, ...otherProps } =
-    props;
+  const {
+    header,
+    width,
+    isDate,
+    isGender,
+    onChange,
+    value,
+    onMale,
+    onFemale,
+    isRole,
+    ...otherProps
+  } = props;
+
+  if (isRole) {
+    return (
+      <div
+        className={styles.parent}
+        style={{
+          width,
+        }}
+      >
+        <div className={styles.header}>{header}</div>
+        <Radio checked={value === "policeman"} onClick={onMale!} />
+        Policeman <br />
+        <Radio checked={value === "admin"} onClick={onFemale} /> Admin <br />
+      </div>
+    );
+  }
+
   if (isGender) {
     return (
       <div
@@ -24,9 +52,9 @@ export const TextField = (props: TextFieldProps) => {
         }}
       >
         <div className={styles.header}>{header}</div>
-        <Radio checked={value==='male'} onClick={onMale!}/>
+        <Radio checked={value === "male"} onClick={onMale!} />
         Male <br />
-        <Radio checked={value==='female'} onClick={onFemale}/> Female <br />
+        <Radio checked={value === "female"} onClick={onFemale} /> Female <br />
       </div>
     );
   }
@@ -43,6 +71,8 @@ export const TextField = (props: TextFieldProps) => {
           mask="9999-99-99"
           placeholder="YYYY-MM-DD"
           className={styles.input}
+          value={value}
+          onChange={onChange}
           style={{
             width,
           }}
@@ -61,6 +91,8 @@ export const TextField = (props: TextFieldProps) => {
       <div className={styles.header}>{header}</div>
       <input
         className={styles.input}
+        onChange={onChange}
+        value={value}
         style={{
           width,
         }}

@@ -30,7 +30,7 @@ import styles from "~/shared/ui/TextField/TextField.module.scss";
 import { environments } from "~/environments";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface Criminal {
+export interface Criminal {
   firstName: string;
   lastName: string;
   iin: string;
