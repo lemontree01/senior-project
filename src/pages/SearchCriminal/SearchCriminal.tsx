@@ -30,8 +30,14 @@ import MuiTextField from "@mui/material/TextField";
 import styles from "~/shared/ui/TextField/TextField.module.scss";
 import { environments } from "~/environments";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 
+import LeftBrow from "~/shared/assets/left_brow.png";
+import RightBrow from "~/shared/assets/right_brow.png";
+import LeftEye from "~/shared/assets/left_eye.png";
+import RightEye from "~/shared/assets/right_eye.png";
+import Mouth from "~/shared/assets/mouth.png";
+import Nose from "~/shared/assets/nose.png";
 
 export interface Criminal {
   firstName: string;
@@ -70,7 +76,7 @@ export function SearchCriminal() {
   const [femaleTicked, setFemaleTicked] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(nose_height);
   const [criminals, setCriminals] = useState<Criminal[]>([]);
 
   const onUpload = async () => {
@@ -91,7 +97,14 @@ export function SearchCriminal() {
           left_brow: +(left_brow / 100).toFixed(2),
           right_brow: +(right_brow / 100).toFixed(2),
           mouth: +(mouth / 100).toFixed(2),
-          gender: maleTicked && femaleTicked ? 'both' : maleTicked ? 'male' : 'female',
+          gender:
+            maleTicked && femaleTicked
+              ? "both"
+              : maleTicked
+              ? "male"
+              : femaleTicked
+              ? "female"
+              : "both",
         }),
       });
       const data = (await response.json()) as Criminal[];
@@ -262,16 +275,6 @@ export function SearchCriminal() {
                     }}
                   />
                 </Box>
-              </Box>
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  gap: 20,
-                  flex: 2,
-                }}
-              >
                 <Box
                   style={{
                     fontSize: 20,
@@ -379,11 +382,93 @@ export function SearchCriminal() {
                   >
                     Gender
                   </Typography>
-                  <Checkbox checked={maleTicked} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMaleTicked(e.target.checked)}/>
+                  <Checkbox
+                    checked={maleTicked}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setMaleTicked(e.target.checked)
+                    }
+                  />
                   <Typography variant="body2">Male</Typography>
-                  <Checkbox checked={femaleTicked} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFemaleTicked(e.target.checked)}/>
+                  <Checkbox
+                    checked={femaleTicked}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFemaleTicked(e.target.checked)
+                    }
+                  />
                   <Typography variant="body2">Female</Typography>
                 </Box>
+              </Box>
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-center",
+                  alignItems: "center",
+                  gap: 20,
+                  flex: 2,
+                }}
+              >
+                <div className="h-[320px] w-[240px] rounded-[120px] bg-white border-2 border-black flex flex-col items-center gap-0">
+                  <div className="flex flex-row justify-center h-[60px] overflow-visible mt-[30px]">
+                    <div className="w-[50%] h-[60px] flex items-center justify-center">
+                      <img
+                        style={{
+                          height: 80 + left_brow * 0.6,
+                        }}
+                        src={RightBrow}
+                        alt=""
+                      />
+                    </div>
+                    <div className="w-[50%] h-[60px] flex items-center justify-center">
+                      <img
+                        style={{
+                          height: 80 + right_brow * 0.6,
+                        }}
+                        src={LeftBrow}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-row justify-center h-[60px] overflow-visible">
+                    <div className="w-[50%] h-[60px] flex items-center justify-center">
+                      <img
+                        style={{
+                          height: 80 + left_eye * 0.6,
+                        }}
+                        src={RightEye}
+                        alt=""
+                      />
+                    </div>
+                    <div className="w-[50%] h-[60px] flex items-center justify-center">
+                      <img
+                        style={{
+                          height: 80 + right_eye * 0.6,
+                        }}
+                        src={LeftEye}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div className="h-[60px] overflow-visible flex items-center justify-center">
+                    <img
+                      style={{
+                        height: 80 + nose_height * 0.6,
+                        width: 80 + nose_size * 0.6,
+                      }}
+                      src={Nose}
+                      alt=""
+                    />
+                  </div>
+                  <div className="h-[60px] overflow-visible flex items-center justify-center mt-[20px]">
+                    <img
+                      style={{
+                        height: 80 + mouth * 0.6,
+                      }}
+                      src={Mouth}
+                      alt=""
+                    />
+                  </div>
+                </div>
               </Box>
             </Box>
           </Box>
