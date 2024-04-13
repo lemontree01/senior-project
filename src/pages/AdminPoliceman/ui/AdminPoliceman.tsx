@@ -84,7 +84,7 @@ const [password, setPassword] = useState('')
       last_name: lastName,
       iin: iin, 
       dob, 
-      department: 
+      department,
       badge_number,
       role
     });
@@ -100,10 +100,10 @@ const [password, setPassword] = useState('')
           last_name: lastName,
           iin: iin, 
           dob, 
-          department: 
+          department,
           badge_number,
           role,
-          password
+          password,
         }),
       })
         .then((r) => {
