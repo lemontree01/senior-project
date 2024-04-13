@@ -1,11 +1,12 @@
 import { Box, Divider, Tooltip, Typography } from "@mui/material";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import KeyboardVoiceIcon from '@mui/icons-material/DriveFileRenameOutline';
 import DescriptionIcon from "@mui/icons-material/Description";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Text } from "~/shared/ui/Text/Text";
 import { Theme } from "~/app/App";
 import { SignUp } from "~/pages/SignUp";
+// import DriveFileRenameOutlineIcon from 
 
 export const Home: React.FC<{
   theme: Theme;
@@ -41,8 +42,7 @@ export const Home: React.FC<{
           }}
         >
           <Typography variant="h1">
-            Web-Based Criminal Sketch Generation and Comparison Platform for Law
-            Enforcement
+          SuspectSearch: AI-Powered Criminal Identification System
           </Typography>
           <div>
             <Typography
@@ -113,7 +113,7 @@ export const Home: React.FC<{
       >
         <Typography variant="h5">Test the functionality</Typography>
         <Typography variant="h6">
-          text or voice description of the criminal
+          text or manual description of the criminal
         </Typography>
       </Box>
 
@@ -153,7 +153,7 @@ export const Home: React.FC<{
                 opacity: "100%",
               },
             }}
-            onClick={() => navigate("/audio")}
+            onClick={() => navigate("/search-criminal")}
           >
             <KeyboardVoiceIcon
               sx={{
@@ -172,7 +172,7 @@ export const Home: React.FC<{
               fontSize: 18
             }}
           >
-            Voice input
+            Manual input
           </Typography>
         </div>
         <div
@@ -326,14 +326,6 @@ export const Home: React.FC<{
               </li>
             </ul>
           </div>
-          <Button
-            variant="contained"
-            style={{
-              alignSelf: "flex-end",
-            }}
-          >
-            Proceed
-          </Button>
         </Box>
         <Box
           sx={{
@@ -380,14 +372,6 @@ export const Home: React.FC<{
               </li>
             </ul>
           </div>
-          <Button
-            variant="contained"
-            style={{
-              alignSelf: "flex-end",
-            }}
-          >
-            Proceed
-          </Button>
         </Box>
       </Box>
       <Divider />

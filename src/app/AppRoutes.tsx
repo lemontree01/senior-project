@@ -15,6 +15,11 @@ import { MainAdmin } from "~/pages/MainAdmin";
 import { SearchCriminal } from "~/pages/SearchCriminal/SearchCriminal";
 import { ListCriminals } from "~/pages/ListCriminals/ListCriminals";
 import { Contacts } from "~/pages/Contacts/Contacts";
+import { EditCriminal } from "~/pages/EditCriminal/EditCriminal";
+import { useState } from "react";
+import { ICriminal, IUser } from "~/shared/lib/types";
+import { ListUsers } from "~/pages/ListUsers/ListUsers";
+import { EditUser } from "~/pages/EditUser/EditUser";
 
 interface IApp {
   theme: Theme;
@@ -23,6 +28,13 @@ interface IApp {
 }
 
 export const AppRoutes: React.FC<IApp> = ({ theme, user, setUser }) => {
+  const [currentCriminal, setCurrentCriminal] = useState<ICriminal | null>(
+    null
+  );
+  const [currentUser, setCurrentUser] = useState<IUser | null>(
+    null
+  );
+
   if (user.name === null) {
     return (
       <Routes>
@@ -55,13 +67,25 @@ export const AppRoutes: React.FC<IApp> = ({ theme, user, setUser }) => {
         <Route path="/text" element={<TextPrompt />} />
         <Route path="/result" element={<Result />} />
         <Route path="/text-result" element={<TextResult />} />
+        <Route
+          path="/edit-criminal"
+          element={<EditCriminal currentCriminal={currentCriminal} />}
+        />
         {/* <Route path="/audio-result" element={<AudioResult />} /> */}
-        <Route path="/admin-criminal" element={<Admin />} />
+        <Route
+          path="/admin-criminal"
+          element={<Admin setCurrentCriminal={setCurrentCriminal} />}
+        />
         <Route path="/admin-policeman" element={<AdminPoliceman />} />
         <Route path="/admin" element={<MainAdmin />} />
         <Route path="/bio" element={<Bio />} />
+        <Route path="/edit-user" element={<EditUser user={currentUser} />} />
         <Route path="/search-criminal" element={<SearchCriminal />} />
-        <Route path="/list-criminals" element={<ListCriminals />} />
+        <Route path="/list-users" element={<ListUsers setCurrentUser={setCurrentUser}/>} />
+        <Route
+          path="/list-criminals"
+          element={<ListCriminals setCurrentCriminal={setCurrentCriminal} />}
+        />
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     );

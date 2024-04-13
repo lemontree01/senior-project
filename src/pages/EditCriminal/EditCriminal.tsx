@@ -53,25 +53,29 @@ const blobToString = (blob: Blob): Promise<string> => {
   });
 };
 
-export const Admin: React.FC<{
-  setCurrentCriminal: React.Dispatch<React.SetStateAction<ICriminal | null>>;
-}> = ({ setCurrentCriminal }) => {
+interface IEditCriminal {
+  currentCriminal: ICriminal | null;
+}
+
+export const EditCriminal:React.FC<IEditCriminal> = ({currentCriminal}) => {
   const navigate = useNavigate();
 
-  const [iin, setIin] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dob, setDob] = useState<string>("");
-  const [maritalStatus, setMaritalStatus] = useState("");
-  const [offense, setOffense] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [gender, setGender] = useState("");
-  const [picture, setPicture] = useState("noImage");
+  const [iin, setIin] = useState(currentCriminal?.iin ?? '');
+  const [firstName, setFirstName] = useState(currentCriminal?.firstName ?? '');
+  const [lastName, setLastName] = useState(currentCriminal?.lastName ?? "");
+  const [dob, setDob] = useState<string>(currentCriminal?.dob ?? '');
+  const [maritalStatus, setMaritalStatus] = useState(currentCriminal?.maritalStatus ?? '');
+  const [offense, setOffense] = useState(currentCriminal?.offense ?? "");
+  const [zipCode, setZipCode] = useState(currentCriminal?.zipCode ?? '');
+  const [gender, setGender] = useState(currentCriminal?.gender ?? '');
+  const [picture, setPicture] = useState(currentCriminal?.image ?? '');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploaded, setIsUploaded] = useState<
     "error" | "success" | "loading" | "initial"
   >("initial");
 
+  const [isInitialImageShown, setIsInitialImageShown] = useState<boolean>(true);
+  console.log('is initial', isInitialImageShown)
   const [nose_len, setnose_len] = useState("");
   const [right_brow_size, setright_brow_size] = useState("");
   const [left_brow_size, setleft_brow_size] = useState("");
@@ -105,6 +109,32 @@ export const Admin: React.FC<{
     });
   }
 
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('')
+  const onDelete = async () => {
+    setDeleteError('')
+    setIsDeleteLoading(true);
+    try {
+      const response = await fetch(`${environments.api}/delete_criminal/`, {
+        method: 'POST',
+        body: JSON.stringify({
+          iin
+        })
+      })
+
+      if(response.status === 200) {
+        navigate(-1);
+        return;
+      } else {
+        throw new Error;
+      }
+    } catch (e) {
+      setDeleteError('Couldn\'t delete the criminal');
+    } finally {
+      setIsDeleteLoading(false);
+    }
+  }
+
   const onUpload = async () => {
     setIsUploaded("loading");
     console.log("uploading");
@@ -115,23 +145,25 @@ export const Admin: React.FC<{
         blob = await fileToBlobString(imageFile);
       }
       console.log("blob:", blob, imageFile);
-      fetch(`${environments.api}/import-criminals/`, {
+      const newCriminal: ICriminal = {
+        firstName,
+        lastName,
+        iin,
+        dob,
+        maritalStatus,
+        offense,
+        zipCode,
+        //@ts-ignore
+        image: isInitialImageShown ? null : blob,
+        gender,
+      }
+      fetch(`${environments.api}/edit_criminal/`, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          iin,
-          firstName,
-          lastName,
-          dob,
-          maritalStatus,
-          offense,
-          zipCode,
-          picture: blob,
-          gender,
-        }),
+        body: JSON.stringify(newCriminal),
       })
         .then((r) => {
           setIsUploaded("success");
@@ -184,7 +216,7 @@ export const Admin: React.FC<{
             >
               <ArrowBackIcon />
             </Button>
-            Upload the new criminal to the database
+            Edit or delete the criminal
           </Typography>
           <Box className="flex flex-row">
             <Box
@@ -203,6 +235,7 @@ export const Admin: React.FC<{
                 }}
               />
               <TextField
+                disabled
                 width="100%"
                 header="Enter IIN (Individual identification number)"
                 placeholder="IIN"
@@ -283,16 +316,16 @@ export const Admin: React.FC<{
                 Upload image
               </div>
               <RectangleImageUpload
+                isInitialImageShown
+                setIsInitialImageShown={setIsInitialImageShown}
                 setImageFile={setImageFile}
                 imageUrl={picture}
                 setImageUrl={setPicture}
               />
               <div className="flex flex-col gap-5">
-                {nose_len && (
-                  <Typography variant="h6" color="primary.main">
-                    The calculated result:
-                  </Typography>
-                )}
+                {nose_len && <Typography variant="h6" color="primary.main">
+                  The calculated result:
+                </Typography>}
                 {nose_len && (
                   <Typography variant="body2">
                     Nose_length: {nose_len}
@@ -357,7 +390,23 @@ export const Admin: React.FC<{
                   }}
                 />
               ) : (
-                <>Upload</>
+                <>Edit</>
+              )}
+            </Button>
+            <Button onClick={onDelete} sx={{
+                width: 120,
+                height: 40,
+              }}
+              variant="outlined">
+                {isDeleteLoading ? (
+                <CircularProgress
+                  size="20px"
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                />
+              ) : (
+                <>Delete</>
               )}
             </Button>
           </div>
@@ -372,14 +421,14 @@ export const Admin: React.FC<{
             }}
           >
             {isUploaded === "success" && (
-              <span className="text-green-400">Successfully loaded</span>
+              <span className="text-green-400">Successfully edited</span>
             )}
             {isUploaded === "error" && (
-              <span className="text-red-400">Server error, failed to load</span>
+              <span className="text-red-400">Server error, failed to edit</span>
             )}
           </div>
         </Box>
       </Box>
     </LocalizationProvider>
   );
-};
+}

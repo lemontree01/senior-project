@@ -5,20 +5,25 @@ interface Q {
   imageUrl: string;
   setImageUrl: React.Dispatch<React.SetStateAction<string>>;
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
+  isInitialImageShown?: boolean;
+  setIsInitialImageShown?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
-
-
 const RectangleImageUpload: React.FC<Q> = (props) => {
-  const { imageUrl, setImageUrl, setImageFile } = props;
+  const {
+    imageUrl,
+    setImageUrl,
+    setImageFile,
+    isInitialImageShown,
+    setIsInitialImageShown,
+  } = props;
 
   console.log("current", imageUrl);
   const inputRef = useRef<any>(null); // import useRef from react
 
   const handleImageChange = (event: any) => {
     setImageUrl(URL.createObjectURL(event.target.files[0]));
-    setImageFile(event.target.files[0])
+    setImageFile(event.target.files[0]);
   };
 
   const handleOnImageRemoveClick = () => {
@@ -86,11 +91,21 @@ const RectangleImageUpload: React.FC<Q> = (props) => {
               height: 20,
             }}
           >
-            Successfully Loaded
+            {!isInitialImageShown && "Successfully Loaded"}
           </div>
-          <Button variant="outlined" onClick={handleOnImageRemoveClick} sx={{
-            width: 150 * 1.2
-          }}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              if (setIsInitialImageShown) {
+                setIsInitialImageShown(false);
+              }
+
+              handleOnImageRemoveClick();
+            }}
+            sx={{
+              width: 150 * 1.2,
+            }}
+          >
             Clear picture
           </Button>
         </div>

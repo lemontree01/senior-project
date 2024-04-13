@@ -48,8 +48,7 @@ export const SignUp: React.FC<ISignIn> = ({ setUser, user }) => {
           }}
           variant="h6"
         >
-          Register for an account to begin using our Web-Based Criminal Sketch
-          Generation and Comparison Platform. After creating your account,
+          Register for an account to begin using our SuspectSearch: AI-Powered Criminal Identification System. After creating your account,
           remember to verify it via email to complete the setup process.
         </Typography>
 

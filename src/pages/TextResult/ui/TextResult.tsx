@@ -79,8 +79,7 @@ export const TextResult = () => {
             Generate New Sketch Menu
           </Typography>
           <Typography variant="h6">
-            Welcome to the main menu of our Web-Based Criminal Sketch Generation
-            and Comparison Platform. Here, you have access to two powerful
+            Welcome to the main menu of our SuspectSearch: AI-Powered Criminal Identification System. Here, you have access to two powerful
             functions:
           </Typography>
           <Button variant="contained" className='w-[10%]'>Back</Button>

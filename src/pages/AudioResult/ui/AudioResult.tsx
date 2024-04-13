@@ -76,8 +76,7 @@ export const AudioResult = () => {
           Generate New Sketch Menu
         </div>
         <Text variant="italic">
-          Welcome to the main menu of our Web-Based Criminal Sketch Generation
-          and Comparison Platform. Here, you have access to two powerful
+          Welcome to the main menu of our SuspectSearch: AI-Powered Criminal Identification System. Here, you have access to two powerful
           functions:
         </Text>
         <Button>Back</Button>

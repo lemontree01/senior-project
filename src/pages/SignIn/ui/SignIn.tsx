@@ -86,7 +86,7 @@ export const SignIn: React.FC<ISignIn> = (props) => {
           variant="h6"
         >
           If you're new here, start by creating an account to access our
-          Web-Based Criminal Sketch Generation and Comparison Platform.
+          SuspectSearch: AI-Powered Criminal Identification System.
         </Typography>
 
         <div

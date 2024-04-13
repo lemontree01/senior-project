@@ -24,8 +24,60 @@ import MuiTextField from "@mui/material/TextField";
 import styles from "~/shared/ui/TextField/TextField.module.scss";
 import { environments } from "~/environments";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { filterAndSortCriminals } from './helper';
-import { ICriminal } from '~/shared/lib/types';
+// import { filterAndSortCriminals } from '../ListCriminals/helper';
+import { ICriminal, IUser } from '~/shared/lib/types';
+
+interface Criminal {
+  dob: string;
+  firstName: string;
+  lastName: string;
+  iin: string;
+  maritalStatus: string;
+  gender: string;
+  offense: string;
+  zipCode: string;
+  picture: string;
+}
+
+export function fuzzySearch(query: string, value: string): boolean {
+  // Perform fuzzy search logic here
+  // For simplicity, let's assume that fuzzy search always returns true
+  return value.toLowerCase().includes(query.toLowerCase());
+}
+
+export function filterAndSortCriminals(searchQuery: string, criminals: IUser[]): IUser[] {
+  // Filter criminals based on fuzzy search on firstName, lastName, and offense
+  const filteredCriminals = criminals.filter(criminal => {
+    return (
+      fuzzySearch(searchQuery, criminal.first_name) ||
+      fuzzySearch(searchQuery, criminal.last_name) 
+      // fuzzySearch(searchQuery, criminal.offense)
+    );
+  });
+
+  // Sort filtered criminals based on similarity to the search query
+  filteredCriminals.sort((a, b) => {
+    // Calculate similarity scores for each criminal
+    const similarityA = calculateSimilarity(searchQuery, a);
+    const similarityB = calculateSimilarity(searchQuery, b);
+    // Sort in descending order of similarity
+    return similarityB - similarityA;
+  });
+
+  return filteredCriminals;
+}
+
+function calculateSimilarity(query: string, criminal: IUser): number {
+  let similarityScore = 0;
+  // Calculate similarity score based on firstName, lastName, and offense
+  if (fuzzySearch(query, criminal.first_name)) {
+    similarityScore++;
+  }
+  if (fuzzySearch(query, criminal.last_name)) {
+    similarityScore++;
+  }
+  return similarityScore;
+}
 
 interface Criminal {
   'dob': string;
@@ -93,9 +145,9 @@ const tempCriminals: Criminal[] = [{
 //   return blobUrl;
 // }
 
-export const ListCriminals:React.FC<{setCurrentCriminal: React.Dispatch<React.SetStateAction<ICriminal | null>>}> = ({setCurrentCriminal}) => {
-  const [criminals, setCriminals] = useState<Criminal[]>([]);
-  const [allCriminals, setAllCriminals] = useState<Criminal[]>([]);
+export const ListUsers:React.FC<{setCurrentUser: React.Dispatch<React.SetStateAction<IUser | null>>}> = ({setCurrentUser}) => {
+  const [criminals, setCriminals] = useState<IUser[]>([]);
+  const [allCriminals, setAllCriminals] = useState<IUser[]>([]);
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>('');
   const [response, setResponse] = useState<any>();
@@ -127,7 +179,7 @@ export const ListCriminals:React.FC<{setCurrentCriminal: React.Dispatch<React.Se
   useEffect(() => {
     setIsLoading(true)
     try {
-      fetch(`${environments.api}/get-criminals/`).then(r => r.json()).catch(e => {
+      fetch(`${environments.api}/get_users/`).then(r => r.json()).catch(e => {
         setIsError('Server error')
         return;
       }).then(r => {
@@ -175,7 +227,7 @@ export const ListCriminals:React.FC<{setCurrentCriminal: React.Dispatch<React.Se
           >
             <ArrowBackIcon />
           </Button>
-          Search for criminals
+          Search for users
         </Typography>
         {isError && <span className='text-red-500 font-bold'>Server Error, can't fetch data</span>}
         <Box className="flex flex-row">
@@ -205,33 +257,32 @@ export const ListCriminals:React.FC<{setCurrentCriminal: React.Dispatch<React.Se
               {criminals.length ? criminals.map((criminal, i) => (
                 <div key={i} className={`flex flex-row my-[10px] justify-between ${i !== 0 && 'mt-[50px]'}`}>
                   <div className={`flex flex-col w-[30%]`}>
-                    <Typography variant="body2">First Name: {criminal.firstName}</Typography>
-                    <Typography variant="body2">Last Name: {criminal.lastName}</Typography>
+                    <Typography variant="body2">First Name: {criminal.first_name}</Typography>
+                    <Typography variant="body2">Last Name: {criminal.last_name}</Typography>
                     <Typography variant="body2">Date of Birth: {criminal.dob}</Typography>
                     <Typography variant="body2">IIN: {criminal.iin}</Typography>
                     <div className='flex flex-row mt-[50px] gap-[20px]'>
                     <Button variant="outlined" onClick={() => {
-                      setCurrentCriminal({
-                        firstName: criminal.firstName,
-                        gender: criminal.gender,
+                      setCurrentUser({
+                        badge_number: criminal.badge_number,
+                        department: criminal.department,
+                        dob: criminal.dob,
+                        first_name: criminal.first_name,
                         iin: criminal.iin,
-                        //@ts-ignore
-                        image: criminal.image,
-                        lastName: criminal.lastName,
-                        maritalStatus: criminal.maritalStatus,
-                        offense: criminal.offense,
-                        zipCode: criminal.zipCode,
-                        dob: criminal.dob
+                        last_name: criminal.last_name,
+                        password: criminal.password,
+                        role: criminal.role,
+
                       })
-                      navigate('/edit-criminal')
+                      navigate('/edit-user')
                     }}>Edit</Button>
                     </div>
                   </div> 
                   <div className='flex flex-col w-[30%]'>
-                    <Typography variant="body2">Gender: {criminal.gender}</Typography>
-                    <Typography variant="body2">Marital Status: {criminal.maritalStatus}</Typography>
-                    <Typography variant="body2">Offense: {criminal.offense}</Typography>
-                    <Typography variant="body2">Zip Code: {criminal.zipCode}</Typography>
+                    <Typography variant="body2">Department: {criminal.department}</Typography>
+                    <Typography variant="body2">Badge number: {criminal.badge_number}</Typography>
+                    <Typography variant="body2">Role: {criminal.role}</Typography>
+                    <Typography variant="body2">Password: {criminal.password}</Typography>
                   </div> 
                   <div className='w-[30%] flex flex-row justify-end'>
                     

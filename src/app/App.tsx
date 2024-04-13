@@ -2,7 +2,14 @@ import "~/app/style/index.scss";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "~/widgets/Header";
 import { AppRoutes } from "./AppRoutes";
-import { Box, Divider, ThemeProvider, Tooltip, Typography, createTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  ThemeProvider,
+  Tooltip,
+  Typography,
+  createTheme,
+} from "@mui/material";
 import { lightTheme } from "~/shared/theme/lightTheme";
 import { darkTheme } from "~/shared/theme/darkTheme";
 import { useEffect, useState } from "react";
@@ -15,7 +22,7 @@ export enum Theme {
 export interface User {
   name: string | null;
   password: string | null;
-  role?: 'admin' | 'policeman',
+  role?: "admin" | "policeman";
 }
 
 export function App() {
@@ -23,15 +30,20 @@ export function App() {
   const [user, setUser] = useState<User>({
     name: null,
     password: null,
-  })
+  });
 
   return (
     <ThemeProvider theme={appTheme === Theme.DARK ? darkTheme : lightTheme}>
       <BrowserRouter>
-        <Header setAppTheme={setAppTheme} appTheme={appTheme} user={user} setUser={setUser}/>
+        <Header
+          setAppTheme={setAppTheme}
+          appTheme={appTheme}
+          user={user}
+          setUser={setUser}
+        />
         <Divider sx={{ bgcolor: "primary.contrastText" }} />
-        <div className='pt-[68px]'>
-          <AppRoutes setUser={setUser} user={user} theme={appTheme}/>
+        <div className="pt-[68px]">
+          <AppRoutes setUser={setUser} user={user} theme={appTheme} />
         </div>
         {/* <Box id="contacts" className="flex-1 flex flex-col items-end justify-around h-full gap-0" bgcolor="primary.contrastText">
           <Tooltip title="maxim.tsoy@nu.edu.kz">
