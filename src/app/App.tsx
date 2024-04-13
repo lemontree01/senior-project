@@ -15,6 +15,7 @@ export enum Theme {
 export interface User {
   name: string | null;
   password: string | null;
+  role?: 'admin' | 'policeman',
 }
 
 export function App() {

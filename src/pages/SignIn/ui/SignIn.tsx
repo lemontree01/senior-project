@@ -1,10 +1,17 @@
-import { Box, Typography, Button, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  CircularProgress,
+} from "@mui/material";
 import { TextField } from "~/shared/ui/TextField";
 import { Text } from "~/shared/ui/Text/Text";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { User } from "~/app/App";
 import { useState } from "react";
+import { environments } from "~/environments";
 
 interface ISignIn {
   user: User;
@@ -16,6 +23,35 @@ export const SignIn: React.FC<ISignIn> = (props) => {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
+  console.log('my error', errorMessage)
+  const onLogin = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const response = await fetch(`${environments.api}/login/`, {
+        method: "POST",
+        body: JSON.stringify({
+          iin: username,
+          password,
+        }),
+      });
+      if (response.status !== 200) {
+        throw new Error;
+      }
+      const data = await response.json();
+      setUser({
+        name: data?.name ?? 'Unknown user',
+        password: '',
+        role: data?.role ?? 'policeman'
+      })
+    } catch (e) {
+      setErrorMessage("Wrong password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const navigate = useNavigate();
   return (
@@ -68,7 +104,9 @@ export const SignIn: React.FC<ISignIn> = (props) => {
             type="password"
           />
         </div>
-
+        <div className="h-[15px]">
+          {errorMessage && <span className="text-red-500">{errorMessage}</span>}
+        </div>
         <div
           style={{
             display: "flex",
@@ -80,15 +118,29 @@ export const SignIn: React.FC<ISignIn> = (props) => {
         >
           <Button
             variant="outlined"
+            sx={{
+              width: 120,
+              height: 40,
+            }}
             onClick={() => {
-              setUser({
-                name: username,
-                password,
-              });
-              navigate("/home");
+              onLogin();
+              // setUser({
+              //   name: username,
+              //   password,
+              // });
+              // navigate("/home");
             }}
           >
-            Continue
+            {isLoading ? (
+              <CircularProgress
+                size="20px"
+                sx={{
+                  fontSize: "12px",
+                }}
+              />
+            ) : (
+              "Login"
+            )}
           </Button>
         </div>
         <Divider />

@@ -52,7 +52,7 @@ export const Header: React.FC<IHeader> = ({
                 marginRight: "auto",
               }}
             >
-              {pages.map((page) => (
+              {pages.filter(el => user.role !== 'admin' ? el.name !== 'Admin Dashboard' : true).map((page) => (
                 <MuiLink
                   key={page.name}
                   onClick={() => navigate(page.route)}
