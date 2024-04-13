@@ -25,12 +25,21 @@ export const SignIn: React.FC<ISignIn> = (props) => {
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
-  console.log('my error', errorMessage)
+  console.log("my error", errorMessage);
   const onLogin = async () => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const response = await fetch(`${environments.api}/login/`, {
+      if (
+        username === environments.localAdmin.name &&
+        password === environments.localAdmin.password
+      ) {
+        setUser(environments.localAdmin);
+        navigate("/home");
+        return;
+      }
+
+      const response = await fetch(`${environments.api}/signin/`, {
         method: "POST",
         body: JSON.stringify({
           iin: username,
@@ -38,14 +47,15 @@ export const SignIn: React.FC<ISignIn> = (props) => {
         }),
       });
       if (response.status !== 200) {
-        throw new Error;
+        throw new Error();
       }
       const data = await response.json();
       setUser({
-        name: data?.name ?? 'Unknown user',
-        password: '',
-        role: data?.role ?? 'policeman'
-      })
+        name: data?.name ?? "Unknown user",
+        password: "",
+        role: data?.role ?? "policeman",
+      });
+      navigate("/home");
     } catch (e) {
       setErrorMessage("Wrong password");
     } finally {
