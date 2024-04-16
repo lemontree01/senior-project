@@ -14,30 +14,48 @@
 
 .container {
   padding: 0 100px;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
 }
 
 .container::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
+  display: none;
 }
 
-body {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-}
-body::-webkit-scrollbar {
-  display: none; 
+:root {
+  --scrollbar-width: 8px;
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: var(--scrollbar-width);
 }
 
-::-webkit-scrollbar-button {
-  display: none;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); 
+  border-radius: 4px;
 }
 
-body {
-  -ms-overflow-style:none;
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
 }
