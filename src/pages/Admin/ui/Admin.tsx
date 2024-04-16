@@ -72,13 +72,13 @@ export const Admin: React.FC<{
     "error" | "success" | "loading" | "initial"
   >("initial");
 
-  const [nose_len, setnose_len] = useState("");
-  const [right_brow_size, setright_brow_size] = useState("");
-  const [left_brow_size, setleft_brow_size] = useState("");
-  const [left_eye_size, setleft_eye_size] = useState("");
-  const [right_eye_size, setright_eye_size] = useState("");
-  const [nose_size, setnose_size] = useState("");
-  const [lips_size, setlips_size] = useState("");
+  const [nose_len, setnose_len] = useState<string | null>(null);
+  const [right_brow_size, setright_brow_size] = useState<string | null>(null);
+  const [left_brow_size, setleft_brow_size] = useState<string | null>(null);
+  const [left_eye_size, setleft_eye_size] = useState<string | null>(null);
+  const [right_eye_size, setright_eye_size] = useState<string | null>(null);
+  const [nose_size, setnose_size] = useState<string | null>(null);
+  const [lips_size, setlips_size] = useState<string | null>(null);
 
   function fileToBlobString(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -288,42 +288,42 @@ export const Admin: React.FC<{
                 setImageUrl={setPicture}
               />
               <div className="flex flex-col gap-5">
-                {nose_len && (
+                {nose_len !== null && (
                   <Typography variant="h6" color="primary.main">
                     The calculated result:
                   </Typography>
                 )}
-                {nose_len && (
+                {nose_len !== null && (
                   <Typography variant="body2">
                     Nose_length: {nose_len}
                   </Typography>
                 )}
-                {right_brow_size && (
+                {right_brow_size !== null && (
                   <Typography variant="body2">
                     Right brow size: {right_brow_size}
                   </Typography>
                 )}
-                {left_brow_size && (
+                {left_brow_size !== null && (
                   <Typography variant="body2">
                     Left brow size: {left_brow_size}
                   </Typography>
                 )}
-                {left_eye_size && (
+                {left_eye_size !== null && (
                   <Typography variant="body2">
                     Left eye size: {left_eye_size}
                   </Typography>
                 )}
-                {right_eye_size && (
+                {right_eye_size !== null && (
                   <Typography variant="body2">
                     Right eye size: {right_eye_size}
                   </Typography>
                 )}
-                {nose_size && (
+                {nose_size !== null && (
                   <Typography variant="body2">
                     Nose size: {nose_size}
                   </Typography>
                 )}
-                {lips_size && (
+                {lips_size !== null && (
                   <Typography variant="body2">
                     Lips size: {lips_size}
                   </Typography>
