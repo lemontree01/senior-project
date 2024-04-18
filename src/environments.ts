@@ -8,5 +8,6 @@ const localAdmin: User = {
 
 export const environments = {
   api: 'https://suspectsearch.pythonanywhere.com',
-  localAdmin
+  localAdmin,
+  localApi: 'http://127.0.0.1:8000'
 }

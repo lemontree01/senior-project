@@ -59,14 +59,23 @@ export function TextPrompt() {
     setIsLoading(true);
     setError("");
     try {
-      const r = await fetch(`${environments.api}/search-by-text/`, {
+      const r = await fetch(`${environments.localApi}/search-criminals/`, {
         method: "POST",
         body: JSON.stringify({
           text,
         }),
       });
       const data = await r.json();
-      setCriminals(data);
+      const q = await fetch(`${environments.api}/search-criminals/`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const qdata = await q.json();
+      setCriminals(qdata);
     } catch (e) {
       setError("Server error");
     } finally {
