@@ -322,7 +322,7 @@ export const EditCriminal:React.FC<IEditCriminal> = ({currentCriminal}) => {
                 imageUrl={picture}
                 setImageUrl={setPicture}
               />
-              <div className="flex flex-col gap-5">
+                            {false && <div className="flex flex-col gap-5">
                 {nose_len !== null && <Typography variant="h6" color="primary.main">
                   The calculated result:
                 </Typography>}
@@ -361,7 +361,7 @@ export const EditCriminal:React.FC<IEditCriminal> = ({currentCriminal}) => {
                     Lips size: {lips_size}
                   </Typography>
                 )}
-              </div>
+              </div>}
             </Box>
           </Box>
           <div

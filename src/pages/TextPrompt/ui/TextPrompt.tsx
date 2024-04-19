@@ -74,12 +74,12 @@ export function TextPrompt() {
       });
       const data = await r.json();
       setnose_len(data?.nose_length);
-      setright_brow_size(data?.right_brow_size);
-      setleft_brow_size(data?.left_brow_size);
-      setleft_eye_size(data?.left_eye_size);
-      setright_eye_size(data?.right_eye_size);
+      setright_brow_size(data?.right_brow);
+      setleft_brow_size(data?.left_brow);
+      setleft_eye_size(data?.left_eye);
+      setright_eye_size(data?.right_eye);
       setnose_size(data?.nose_size);
-      setlips_size(data?.lips_size);
+      setlips_size(data?.mouth);
       const q = await fetch(`${environments.api}/search-criminals/`, {
         method: "POST",
         headers: {
