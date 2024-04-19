@@ -54,6 +54,13 @@ export function TextPrompt() {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [nose_len, setnose_len] = useState<string | null>(null);
+  const [right_brow_size, setright_brow_size] = useState<string | null>(null);
+  const [left_brow_size, setleft_brow_size] = useState<string | null>(null);
+  const [left_eye_size, setleft_eye_size] = useState<string | null>(null);
+  const [right_eye_size, setright_eye_size] = useState<string | null>(null);
+  const [nose_size, setnose_size] = useState<string | null>(null);
+  const [lips_size, setlips_size] = useState<string | null>(null);
 
   const onClick = async () => {
     setIsLoading(true);
@@ -66,6 +73,13 @@ export function TextPrompt() {
         }),
       });
       const data = await r.json();
+      setnose_len(data?.nose_length);
+      setright_brow_size(data?.right_brow_size);
+      setleft_brow_size(data?.left_brow_size);
+      setleft_eye_size(data?.left_eye_size);
+      setright_eye_size(data?.right_eye_size);
+      setnose_size(data?.nose_size);
+      setlips_size(data?.lips_size);
       const q = await fetch(`${environments.api}/search-criminals/`, {
         method: "POST",
         headers: {
@@ -83,6 +97,8 @@ export function TextPrompt() {
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <Box
@@ -202,6 +218,49 @@ export function TextPrompt() {
             </Button>
             Result based on your text
           </Typography>
+          <div className="flex flex-col gap-5">
+    
+                {nose_len !== null && (
+                  <Typography variant="h6" color="primary.main">
+                    The calculated result:
+                  </Typography>
+                )}
+                {nose_len !== null && (
+                  <Typography variant="body2">
+                    Nose_length: {nose_len}
+                  </Typography>
+                )}
+                {right_brow_size !== null && (
+                  <Typography variant="body2">
+                    Right brow size: {right_brow_size}
+                  </Typography>
+                )}
+                {left_brow_size !== null && (
+                  <Typography variant="body2">
+                    Left brow size: {left_brow_size}
+                  </Typography>
+                )}
+                {left_eye_size !== null && (
+                  <Typography variant="body2">
+                    Left eye size: {left_eye_size}
+                  </Typography>
+                )}
+                {right_eye_size !== null && (
+                  <Typography variant="body2">
+                    Right eye size: {right_eye_size}
+                  </Typography>
+                )}
+                {nose_size !== null && (
+                  <Typography variant="body2">
+                    Nose size: {nose_size}
+                  </Typography>
+                )}
+                {lips_size !== null && (
+                  <Typography variant="body2">
+                    Lips size: {lips_size}
+                  </Typography>
+                )}
+              </div>
           <div className="flex flex-row flex-wrap justify-between">
             {criminals.length ? (
               [...criminals].map((criminal, i) => (
@@ -235,6 +294,7 @@ export function TextPrompt() {
               </Typography>
             )}
           </div>
+          
           <Button
             sx={{
               width: 120,
