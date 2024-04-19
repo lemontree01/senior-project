@@ -73,7 +73,7 @@ export function TextPrompt() {
         }),
       });
       const data = await r.json();
-      setnose_len(data?.nose_length);
+      setnose_len(data?.nose_height);
       setright_brow_size(data?.right_brow);
       setleft_brow_size(data?.left_brow);
       setleft_eye_size(data?.left_eye);
